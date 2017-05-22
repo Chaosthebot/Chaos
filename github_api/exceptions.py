@@ -1,0 +1,1 @@
+class CouldntMerge(Exception): pass

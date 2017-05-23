@@ -15,7 +15,6 @@ import github_api.voting
 import github_api.repos
 import github_api.comments
 from github_api import exceptions as gh_exc
-import platform
 
 import patch
 
@@ -77,10 +76,6 @@ if __name__ == "__main__":
                             pr_num)
                     gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
                     continue
-
-                # Comment on the pr with the OS so we can eventually install cowsay and comment with that
-                dist, version, codename = platform.linux_distribution()
-                gh.comments.leave_comment(api, settings.URN, pr_num, dist+' '+version+' '+codename)
 
                 gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
                 needs_update = True

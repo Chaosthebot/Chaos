@@ -61,7 +61,7 @@ See the source code for more details.
 
 ## Death Counter
 
-Chaosbot has died 2 times.  This counter is incremented whenever the trunk breaks
+Chaosbot has died 3 times.  This counter is incremented whenever the trunk breaks
 and the server must be restarted manually.
 
 ## Server details

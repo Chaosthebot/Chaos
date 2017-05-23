@@ -79,7 +79,7 @@ A: Errors can happen, and in the interest of keeping things interesting, ChaosBo
 will manually be restarted and the death counter will be incremented.
 
 #### Q: What is "general approval" from the community?
-A: Users must vote on your PR, through either a :+1: or :-1: comment or reaction,
+A: Users must vote on your PR, through either a comment or reaction,
 or a accept/reject pull request review.  See [Voting](https://github.com/chaosbot/Chaos/blob/master/README.md#voting).
 
 #### Q: What if ChaosBot has a problem that can't be solved by a PR?

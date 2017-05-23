@@ -113,7 +113,7 @@ def get_ready_prs(api, urn, window):
 
         is_wip = "WIP" in pr["title"]
 
-        if not is_wip and delta > window:
+        if not is_wip and delta > window and pr['user']['login'] == 'mrhwick':
             # we check if its mergeable if its outside the voting window,
             # because there seems to be a race where a freshly-created PR exists
             # in the paginated list of PRs, but 404s when trying to fetch it

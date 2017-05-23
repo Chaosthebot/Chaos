@@ -25,7 +25,7 @@ def merge_pr(api, urn, pr, votes, total, threshold):
     desc = """
 {pr_url}
 
-:ok_woman: PR passed with a vote of {vfor} for and {vagainst} against, with a 
+:ok_woman: PR passed with a vote of {vfor} for and {vagainst} against, with a
 weighted total of {total:.1f} and a threshold of {threshold:.1f}.
 
 {record}
@@ -113,7 +113,7 @@ def get_ready_prs(api, urn, window):
 
         is_wip = "WIP" in pr["title"]
 
-        if not is_wip and delta > window and pr['user']['login'] == 'mrhwick':
+        if not is_wip and delta > window:
             # we check if its mergeable if its outside the voting window,
             # because there seems to be a race where a freshly-created PR exists
             # in the paginated list of PRs, but 404s when trying to fetch it

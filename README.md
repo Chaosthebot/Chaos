@@ -40,15 +40,19 @@ the imagination of the open source community.
 ## Voting
 
 Votes on a PR are determined through following mechanism:
-* A comment that contains :+1: or :-1: somewhere in the body counts as a vote for
+* A comment that contains an emoji signifying a vote somewhere in the body counts as a vote for
   or against the PR.
-* Same for :+1: or :-1: reaction on the PR itself and an accept/reject [pull
+* Same for reactions on the PR itself and an accept/reject [pull
   request review](https://help.github.com/articles/about-pull-request-reviews/)
 * The PR itself counts as :+1: from the owner.
 * Voting goes on for the duration of the voting window - currently 2 or 3 hours,
   depending on the local server time.
 * While the voting process is going, users can change their reactions and edit
   their comments, effectively changing their vote.
+  
+Emoji which count as votes are:
+* +1: :+1: :heart: :tada:
+* -1: :-1: :confused:
 
 ## Death Counter
 

@@ -63,8 +63,8 @@ Chaosbot has died 2 times.  This counter is incremented whenever the trunk break
 and the server must be restarted manually.
 
 ## Server details
-
-* **ChaosBot has root access on its server.**  This means you are able to install
+* **ChaosBot runs Ubuntu 14.04 Trusty**
+* **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.
 * **Its domain name is chaosthebot.com,** but nothing is listening on

@@ -50,20 +50,6 @@ Votes on a PR are determined through following mechanism:
 * While the voting process is going, users can change their reactions and edit
   their comments, effectively changing their vote.
 
-### Weights and thresholds
-
-Votes are not counted as simple unit votes.  They are adjusted by taking the log
-of a user's followers, to the base of some low follower count.  The idea is that
-voters with more followers should have more weight in their vote, but not so much
-that it is overpowering.
-
-Vote thresholds must also be met for a PR to be approved.  This is determined as
-a percentage of the number of watchers on the repository.  **However, it is more
-important to vote against bad PRs than to assume the minimum threshold will not
-be met.**
-
-See the source code for more details.
-
 ## Death Counter
 
 Chaosbot has died 4 times.  This counter is incremented whenever the trunk breaks

@@ -9,6 +9,7 @@ __log = logging.getLogger("chaosbot")
 def poll_pull_requests():
     __log.info("looking for PRs")
 
+    api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
     now = arrow.utcnow()
     voting_window = gh.voting.get_voting_window(now)
     prs = gh.prs.get_ready_prs(api, settings.URN, voting_window)

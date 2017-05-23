@@ -47,7 +47,7 @@ Votes on a PR are sourced through the following mechanisms:
 * Voting goes on for the duration of the voting window - currently 2 or 3 hours,
   depending on the local server time.
 * While the voting process is going, users can change their reactions and edit
-  their comments, effectively chanding their vote.
+  their comments, effectively changing their vote.
 
 ### Weights and thresholds
 

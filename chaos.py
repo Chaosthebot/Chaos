@@ -20,6 +20,8 @@ from github_api import exceptions as gh_exc
 
 import patch
 
+import encryption
+
 
 THIS_DIR = dirname(abspath(__file__))
 

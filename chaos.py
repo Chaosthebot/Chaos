@@ -46,7 +46,7 @@ if __name__ == "__main__":
     logging.info("starting up and entering event loop")
     
     os.system("pkill chaos_server")
-    subprocess.Popen("./server.py",cwd=os.cwd()+"/server")
+    subprocess.Popen("./server.py",cwd=join(THIS_DIR, "server"))
     
     while True:
         log.info("looking for PRs")

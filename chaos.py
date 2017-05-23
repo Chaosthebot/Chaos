@@ -4,7 +4,6 @@
 import time
 import os
 import sys
-import sh
 import logging
 import threading
 import http.server
@@ -44,15 +43,10 @@ class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(random.choice(self.fortunes).encode("utf8"))
 
 
-def update_self_code():
-    """pull the latest commits from master"""
-    sh.git.pull("origin", "master")
-
-
 def restart_self():
-    """restart our process"""
-    os.execl(sys.executable, sys.executable, *sys.argv)
-
+    """ restart chaos """
+    startup_path = join(dirname(__file__), "startup.sh")
+    os.execl(startup_path, startup_path)
 
 def http_server():
     s = http.server.HTTPServer(('', 8080), HTTPServerRequestHandler)
@@ -63,12 +57,6 @@ def start_http_server():
     http_server_thread = threading.Thread(target=http_server)
     http_server_thread.start()
 
-
-def install_requirements():
-    """install or update requirements"""
-    os.system("pip install -r requirements.txt")
-
-
 def main():
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("requests").propagate = False
@@ -77,7 +65,7 @@ def main():
     log = logging.getLogger("chaosbot")
 
     api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
-
+    
     logging.info("starting up and entering event loop")
     
     os.system("pkill chaos_server")
@@ -133,8 +121,6 @@ def main():
         # we approved a PR, restart
         if needs_update:
             logging.info("updating code and requirements and restarting self")
-            update_self_code()
-            install_requirements()
             restart_self()
 
         logging.info("sleeping for %d seconds", settings.SLEEP_TIME)

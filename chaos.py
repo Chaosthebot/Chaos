@@ -4,7 +4,7 @@ import sys
 import sh
 from os.path import dirname, abspath, join
 import logging
-
+import subprocess
 import arrow
 
 import settings
@@ -45,6 +45,10 @@ def restart_self():
 
 if __name__ == "__main__":
     logging.info("starting up and entering event loop")
+    
+    os.system("pkill chaos_server")
+    subprocess.Popen("./server/server.py")
+    
     while True:
         log.info("looking for PRs")
 

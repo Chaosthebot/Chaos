@@ -6,4 +6,3 @@ python-dateutil==2.6.0
 requests==2.14.2
 six==1.10.0
 emoji==0.4.5
-python-twitter===3.3

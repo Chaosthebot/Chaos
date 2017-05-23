@@ -52,7 +52,7 @@ Votes on a PR are determined through following mechanism:
 
 ## Death Counter
 
-Chaosbot has died 4 times.  This counter is incremented whenever the trunk breaks
+Chaosbot has died 5 times.  This counter is incremented whenever the trunk breaks
 and the server must be restarted manually.
 
 ## Server details

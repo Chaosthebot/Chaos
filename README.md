@@ -61,7 +61,7 @@ and the server must be restarted manually.
 
 ## Server details
 
-* **ChaosBot runs Ubuntu 14.04 Trusty**
+* **ChaosBot runs with Python 3.5 on Ubuntu 14.04 Trusty**
 * **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.

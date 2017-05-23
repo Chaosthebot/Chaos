@@ -39,11 +39,16 @@ the imagination of the open source community.
 
 ## Voting
 
-Votes on a PR are sourced through the following mechanisms:
-* A comment that contains :+1: or :-1: somewhere in the body
-* A :+1: or :-1: reaction on the PR itself
-* An accept/reject [pull request review](https://help.github.com/articles/about-pull-request-reviews/)
-* The PR itself counts as :+1: from the owner
+Votes on a PR are determined through following mechanism:
+* A comment that contains :+1: or :-1: somewhere in the body counts as a vote for
+  or against the PR.
+* Same for :+1: or :-1: reaction on the PR itself and an accept/reject [pull
+  request review](https://help.github.com/articles/about-pull-request-reviews/)
+* The PR itself counts as :+1: from the owner.
+* Voting goes on for the duration of the voting window - currently 2 or 3 hours,
+  depending on the local server time.
+* While the voting process is going, users can change their reactions and edit
+  their comments, effectively changing their vote.
 
 ### Weights and thresholds
 
@@ -61,7 +66,7 @@ See the source code for more details.
 
 ## Death Counter
 
-Chaosbot has died 3 times.  This counter is incremented whenever the trunk breaks
+Chaosbot has died 4 times.  This counter is incremented whenever the trunk breaks
 and the server must be restarted manually.
 
 ## Server details
@@ -70,7 +75,7 @@ and the server must be restarted manually.
 * **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.
-* **Its domain name is chaosthebot.com,** but nothing is listening on
+* **Its domain name is [chaosthebot.com](http://chaosthebot.com),** but nothing is listening on
 any port...yet.
 * **It's hosted on a low-tier machine in the cloud.**  This means there aren't a
 ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory,

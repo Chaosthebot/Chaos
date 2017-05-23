@@ -79,15 +79,15 @@ def main():
     api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
     logging.info("starting up and entering event loop")
-
+    
     os.system("pkill chaos_server")
 
     server_dir = join(dirname(abspath(__file__)), "server")
     subprocess.Popen([sys.executable, "server.py"], cwd=server_dir)
-
+    
     log.info("starting http server")
     start_http_server()
-
+    
     while True:
         log.info("looking for PRs")
 
@@ -100,20 +100,35 @@ def main():
             pr_num = pr["number"]
             logging.info("processing PR #%d", pr_num)
 
-            log.info("PR %d approved for merging!", pr_num)
-            try:
-                gh.prs.merge_pr(api, settings.URN, pr, votes, vote_total, threshold)
-            # some error, like suddenly there's a merge conflict, or some
-            # new commits were introduced between findint this ready pr and
-            # merging it
-            except gh_exc.CouldntMerge:
-                log.info("couldn't merge PR %d for some reason, skipping",
-                         pr_num)
-                gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
-                continue
+            votes = gh.voting.get_votes(api, settings.URN, pr)
+        
+            # is our PR approved or rejected?
+            vote_total = gh.voting.get_vote_sum(api, votes)
+            threshold = gh.voting.get_approval_threshold(api, settings.URN)
+            is_approved = vote_total >= threshold
 
-            gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
-            needs_update = True
+            if is_approved:
+                log.info("PR %d approved for merging!", pr_num)
+                try:
+                    gh.prs.merge_pr(api, settings.URN, pr, votes, vote_total,
+                            threshold)
+                # some error, like suddenly there's a merge conflict, or some
+                # new commits were introduced between findint this ready pr and
+                # merging it
+                except gh_exc.CouldntMerge:
+                    log.info("couldn't merge PR %d for some reason, skipping",
+                            pr_num)
+                    gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
+                    continue
+
+                gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
+                needs_update = True
+
+            else:
+                log.info("PR %d rejected, closing", pr_num)
+                gh.comments.leave_reject_comment(api, settings.URN, pr_num)
+                gh.prs.label_pr(api, settings.URN, pr_num, ["rejected"])
+                gh.prs.close_pr(api, settings.URN, pr)
 
         # we approved a PR, restart
         if needs_update:

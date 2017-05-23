@@ -1,6 +1,6 @@
 # ChaosBot
 
-[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/gitter)
+[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/Lobby)
 
 > Chaos, the vacant and infinite space which existed according to the ancient
 > cosmogonies previous to the creation of the world, and out of which the gods,

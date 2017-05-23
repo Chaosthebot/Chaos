@@ -4,6 +4,9 @@ import sys
 import sh
 from os.path import dirname, abspath, join
 import logging
+import threading
+import http.server
+import random
 
 import arrow
 
@@ -30,7 +33,17 @@ log = logging.getLogger("chaosbot")
 
 api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
+fortunes = []
+with open("fortunes.txt", "r", encoding="utf8") as f:
+    fortunes = f.read().split("\n%\n")
 
+class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html; charset=utf-8")
+        self.end_headers()
+
+        self.wfile.write(random.choice(fortunes).encode("utf8"))
 
 def update_self_code():
     """ pull the latest commits from master """
@@ -41,10 +54,21 @@ def restart_self():
     """ restart our process """
     os.execl(sys.executable, sys.executable, *sys.argv)
 
+def http_server():
+    s = http.server.HTTPServer(('', 8080), HTTPServerRequestHandler)
+    s.serve_forever()
 
+def start_http_server():
+    http_server_thread = threading.Thread(target=http_server)
+    http_server_thread.start()
 
 if __name__ == "__main__":
-    logging.info("starting up and entering event loop")
+    log.info("starting up")
+
+    log.info("starting http server")
+    start_http_server()
+
+    log.info("entering event loop")
     while True:
         log.info("looking for PRs")
 

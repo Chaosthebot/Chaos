@@ -1,6 +1,7 @@
 from math import log
 import arrow
 import re
+from emoji import demojize
 
 from . import prs
 from . import comments
@@ -118,15 +119,8 @@ def get_vote_weight(api, username):
     created = arrow.get(user["created_at"])
     age = (now - created).total_seconds()
     old_enough_to_vote = age >= settings.MIN_VOTER_AGE
-    age_weight = 1.0 if old_enough_to_vote else 0.0
+    weight = 1.0 if old_enough_to_vote else 0.0
 
-    # here we use some basic social proof to weight their vote.  the theory here
-    # is that a user's followers has a log relationship to their coding
-    # judgement?  there's probably something better to use here
-    followers = user["followers"]
-    social_weight = log(followers + 1, settings.FOLLOWER_LOG_BASE)
-
-    weight = age_weight * social_weight
     return weight
 
 
@@ -160,21 +154,29 @@ def parse_review_for_vote(state):
 
 def parse_reaction_for_vote(body):
     """ turns a comment reaction into a vote, if possible """
-    try:
-        vote = int(body)
-    except ValueError:
-        vote = 0
-    return vote
+    return parse_emojis_for_vote(":{emoji}:".format(emoji=body))
 
 
 def parse_comment_for_vote(body):
     """ turns a comment into a vote, if possible """
-    vote = 0
-    m = re.search(":((?:\+|\-)1):", body, re.M)
-    if m:
-        vote = int(m.group(1))
-    return vote
+    return parse_emojis_for_vote(demojize(body))
 
+def parse_emojis_for_vote(body):
+    """ searches text for matching emojis """
+    for positive_emoji in prepare_emojis_list('positive'):
+        if positive_emoji in body:
+            return 1
+    for negative_emoji in prepare_emojis_list('negative'):
+        if negative_emoji in body:
+            return -1
+    return 0
+
+def prepare_emojis_list(type):
+    fname = "emojis.{type}".format(type=type)
+    with open(fname) as f:
+        content = f.readlines()
+    content = [x.strip() for x in content]
+    return list(filter(None, content))
 
 def friendly_voting_record(votes):
     """ returns a sorted list (a string list, not datatype list) of voters and

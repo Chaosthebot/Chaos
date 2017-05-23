@@ -40,7 +40,9 @@ def restart_self():
     """ restart our process """
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-
+def install_requirements():
+    """install or update requirements"""
+    os.system("pip install -r requirements.txt")
 
 if __name__ == "__main__":
     logging.info("starting up and entering event loop")
@@ -93,8 +95,9 @@ if __name__ == "__main__":
 
         # we approved a PR, restart
         if needs_update:
-            logging.info("updating code and restarting self")
+            logging.info("updating code and requirements and restarting self")
             update_self_code()
+            install_requirements()
             restart_self()
 
         logging.info("sleeping for %d seconds", settings.SLEEP_TIME)

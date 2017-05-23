@@ -3,7 +3,9 @@ import settings
 from . import misc
 from . import voting
 from . import exceptions as exc
-
+import sys
+sys.path.insert(0, '../twitter_api')
+from twitterApi import Twitter
 
 def merge_pr(api, urn, pr, votes, total, threshold):
     """ merge a pull request, if possible, and use a nice detailed merge commit
@@ -53,7 +55,9 @@ weighted total of {total:.1f} and a threshold of {threshold:.1f}.
             raise exc.CouldntMerge
         else:
             raise
-
+    #Now we tweet that merge :D
+    twitterApi = Twitter()
+    twitterApi.postTweet(title)
 
 def label_pr(api, urn, pr, labels):
     """ apply an issue label to a pr """

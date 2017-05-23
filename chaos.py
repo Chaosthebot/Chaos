@@ -32,7 +32,7 @@ log = logging.getLogger("chaosbot")
 api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
 fortunes = []
-with open("fortunes.txt", "r", encoding="utf8") as f:
+with open("data/fortunes.txt", "r", encoding="utf8") as f:
     fortunes = f.read().split("\n%\n")
 
 class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):

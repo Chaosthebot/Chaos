@@ -18,4 +18,5 @@ class Twitter:
         try:
             status = self.api.PostUpdate(message)
         except:
+            #TODO clean message and add more exception
             print 'twitter fail because message too long or encoding problem'

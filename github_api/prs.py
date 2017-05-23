@@ -72,7 +72,12 @@ def close_pr(api, urn, pr):
 def get_pr_last_updated(pr_data):
     """ a helper for finding the utc datetime of the last pr branch
     modifications """
-    return arrow.get(pr_data["head"]["repo"]["pushed_at"])
+    repo = pr_data["head"]["repo"]
+    if repo:
+        dt = repo["pushed_at"]
+    else:
+        dt = pr_data["created_at"]
+    return arrow.get(dt)
 
 
 def get_pr_comments(api, urn, pr_num, since):

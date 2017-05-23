@@ -7,7 +7,7 @@
 ChaosBot is a social coding experiment to see what happens when the absolute
 direction of a software project is turned over to the open source community.
 
-![There was clearly a kitty missing.](http://thecatapi.com/api/images/get?format=src&type=gif)
+![There was clearly a kitty missing.](http://thecatapi.com/api/images/get?format=src&type=png&size=small)
 
 ## How it works
 

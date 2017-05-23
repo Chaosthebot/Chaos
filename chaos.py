@@ -7,7 +7,7 @@ import logging
 import threading
 import http.server
 import random
-
+import subprocess
 import arrow
 
 import settings
@@ -18,7 +18,6 @@ import github_api.voting
 import github_api.repos
 import github_api.comments
 from github_api import exceptions as gh_exc
-import platform
 
 import patch
 
@@ -54,6 +53,7 @@ def restart_self():
     """ restart our process """
     os.execl(sys.executable, sys.executable, *sys.argv)
 
+
 def http_server():
     s = http.server.HTTPServer(('', 8080), HTTPServerRequestHandler)
     s.serve_forever()
@@ -62,13 +62,19 @@ def start_http_server():
     http_server_thread = threading.Thread(target=http_server)
     http_server_thread.start()
 
-if __name__ == "__main__":
-    log.info("starting up")
+def install_requirements():
+    """install or update requirements"""
+    os.system("pip install -r requirements.txt")
 
+if __name__ == "__main__":
+    logging.info("starting up and entering event loop")
+    
+    os.system("pkill chaos_server")
+    subprocess.Popen([sys.executable, "server.py"], cwd=join(THIS_DIR, "server"))
+    
     log.info("starting http server")
     start_http_server()
-
-    log.info("entering event loop")
+    
     while True:
         log.info("looking for PRs")
 
@@ -102,10 +108,6 @@ if __name__ == "__main__":
                     gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
                     continue
 
-                # Comment on the pr with the OS so we can eventually install cowsay and comment with that
-                dist, version, codename = platform.linux_distribution()
-                gh.comments.leave_comment(api, settings.URN, pr_num, dist+' '+version+' '+codename)
-
                 gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
                 needs_update = True
 
@@ -118,8 +120,9 @@ if __name__ == "__main__":
 
         # we approved a PR, restart
         if needs_update:
-            logging.info("updating code and restarting self")
+            logging.info("updating code and requirements and restarting self")
             update_self_code()
+            install_requirements()
             restart_self()
 
         logging.info("sleeping for %d seconds", settings.SLEEP_TIME)

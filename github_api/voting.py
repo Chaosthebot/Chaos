@@ -56,10 +56,13 @@ def get_pr_comment_votes_all(api, urn, pr_num, since):
         # ------------|---------------|---------------
         # old comment | doesn't count | doesn't count
         # new comment | not possible  | counts
+        '''
+        Removed in response to issue #21
         reaction_votes = get_comment_reaction_votes(api, urn,
                 comment["id"], since)
         for reaction_owner, vote in reaction_votes:
             yield reaction_owner, vote
+        '''
 
     # we consider the pr itself to be the "first comment."  in the web ui, it
     # looks like a comment, complete with reactions, so let's treat it like a

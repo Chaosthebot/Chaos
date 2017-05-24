@@ -1,5 +1,6 @@
 import arrow
 import logging
+import os
 from os.path import join, abspath, dirname
 
 import settings
@@ -44,6 +45,11 @@ def poll_pull_requests():
                 continue
 
             gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
+
+            # chaosbot rewards merge owners with a follow
+            pr_owner = pr["user"]["login"]
+            gh.users.follow_user(api, pr_owner)
+
             needs_update = True
 
         else:
@@ -55,7 +61,7 @@ def poll_pull_requests():
     # we approved a PR, restart
     if needs_update:
         __log.info("updating code and requirements and restarting self")
-        startup_path = join(THIS_DIR, "startup.sh")
+        startup_path = join(THIS_DIR, "..", "startup.sh")
         os.execl(startup_path, startup_path)
 
     __log.info("Waiting %d seconds until next scheduled PR polling event", settings.PULL_REQUEST_POLLING_INTERVAL_SECONDS)

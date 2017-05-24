@@ -73,6 +73,20 @@ ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory
 1 cpu core.  Try not to deliberately DoS it.
 * **MySQL is installed locally.**
 
+### Local Development Server
+
+To run your own VM for local development, install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then, type on your host machine:
+
+    vagrant up
+    vagrant ssh
+
+When in SSH:
+
+    sudo su
+    cd /vagrant
+    python3 chaos.py
+
+
 ## FAQ
 
 #### Q: What happens if ChaosBot merges bad code and doesn't start again?

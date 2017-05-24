@@ -30,7 +30,7 @@ def merge_pr(api, urn, pr, votes, total, threshold):
 Description:
 {pr_description}
 
-ok_woman: PR passed {summary}.
+:ok_woman: PR passed {summary}.
 
 {record}
 """.strip().format(
@@ -52,6 +52,7 @@ ok_woman: PR passed {summary}.
     }
     try:
         resp = api("PUT", path, json=data)
+        return resp["sha"]
     except HTTPError as e:
         resp = e.response
         # could not be merged

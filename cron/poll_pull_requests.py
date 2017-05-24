@@ -47,7 +47,7 @@ def poll_pull_requests():
                 __log.info("PR %d approved for merging!", pr_num)
 
                 try:
-                    gh.prs.merge_pr(api, settings.URN, pr, votes, vote_total,
+                    sha = gh.prs.merge_pr(api, settings.URN, pr, votes, vote_total,
                             threshold)
                 # some error, like suddenly there's a merge conflict, or some
                 # new commits were introduced between findint this ready pr and
@@ -58,6 +58,7 @@ def poll_pull_requests():
                     gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
                     continue
 
+                gh.comments.leave_accept_comment(api, settings.URN, pr_num, sha, votes, vote_total, threshold)
                 gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
 
                 # chaosbot rewards merge owners with a follow
@@ -73,7 +74,7 @@ def poll_pull_requests():
 
             if in_window:
                 __log.info("PR %d rejected, closing", pr_num)
-                gh.comments.leave_reject_comment(api, settings.URN, pr_num)
+                gh.comments.leave_reject_comment(api, settings.URN, pr_num, votes, vote_total, threshold)
                 gh.prs.label_pr(api, settings.URN, pr_num, ["rejected"])
                 gh.prs.close_pr(api, settings.URN, pr)
 

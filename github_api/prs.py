@@ -80,11 +80,10 @@ def get_pr_last_updated(pr_data):
     return arrow.get(dt)
 
 
-def get_pr_comments(api, urn, pr_num, since):
+def get_pr_comments(api, urn, pr_num):
     """ yield all comments on a pr, weirdly excluding the initial pr comment
     itself (the one the owner makes) """
     params = {
-        "since": misc.dt_to_github_dt(since),
         "per_page": settings.DEFAULT_PAGINATION
     }
     path = "/repos/{urn}/issues/{pr}/comments".format(urn=urn, pr=pr_num)
@@ -156,12 +155,10 @@ def get_open_prs(api, urn):
     return data
 
 
-def get_reactions_for_pr(api, urn, pr, since):
+def get_reactions_for_pr(api, urn, pr):
     path = "/repos/{urn}/issues/{pr}/reactions".format(urn=urn, pr=pr)
     params = {"per_page": settings.DEFAULT_PAGINATION}
     reactions = api("get", path, params=params)
     for reaction in reactions:
-        created = arrow.get(reaction["created_at"])
-        if created > since:
-            yield reaction
+        yield reaction
 

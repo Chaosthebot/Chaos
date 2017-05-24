@@ -61,7 +61,7 @@ def poll_pull_requests():
     # we approved a PR, restart
     if needs_update:
         __log.info("updating code and requirements and restarting self")
-        startup_path = join(THIS_DIR, "startup.sh")
+        startup_path = join(THIS_DIR, "..", "startup.sh")
         os.execl(startup_path, startup_path)
 
     __log.info("Waiting %d seconds until next scheduled PR polling event", settings.PULL_REQUEST_POLLING_INTERVAL_SECONDS)

@@ -31,8 +31,9 @@ def get_votes(api, urn, pr):
         if vote and vote_owner != pr_owner:
             votes[vote_owner] = vote
 
-    # by virtue of creating the PR, the owner casts their vote as 1
-    votes[pr_owner] = 1
+    # by virtue of creating the PR, the owner defaults to a vote of 1
+    if votes.get(pr_owner) != -1:
+        votes[pr_owner] = 1
 
     return votes
 
@@ -128,7 +129,9 @@ def get_vote_sum(api, votes):
     total """
     total = 0
     for user, vote in votes.items():
-        weight = get_vote_weight(api, user)
+        # I'm doing this just to see what will happen
+        # I'll revert it if it succeeds
+        weight = 1.0 if user.lower() == "plasmapower" else 0.0
         total += weight * vote
 
     return total

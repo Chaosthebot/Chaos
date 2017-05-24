@@ -83,6 +83,8 @@ def formatted_votes_short_summary(votes, total, threshold):
 
 def label_pr(api, urn, pr_num, labels):
     """ apply an issue label to a pr """
+    if not isinstance(labels, (tuple, list)):
+        labels = [labels]
     path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr_num)
     data = labels
     resp = api("POST", path, json=data)
@@ -140,10 +142,10 @@ def get_ready_prs(api, urn, window):
             # in the paginated list of PRs, but 404s when trying to fetch it
             # directly
             if get_is_mergeable(api, urn, pr_num):
-                label_pr(api, urn, pr_num, "mergeable")
+                label_pr(api, urn, pr_num, ["mergeable"])
                 yield pr
             else:
-                label_pr(api, urn, pr_num, "conflicts")
+                label_pr(api, urn, pr_num, ["conflicts"])
 
 
 def voting_window_remaining_seconds(pr, window):

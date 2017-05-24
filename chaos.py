@@ -68,8 +68,8 @@ def main():
     server_dir = join(dirname(abspath(__file__)), "server")
     subprocess.Popen([sys.executable, "server.py"], cwd=server_dir)
 
-    log.info("starting http server")
-    start_http_server()
+    #log.info("starting http server")
+    #start_http_server()
 
     # Schedule all cron jobs to be run
     cron.schedule_jobs()

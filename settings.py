@@ -49,3 +49,6 @@ MEMOIZE_CACHE_DIRNAME = "api_cache"
 
 # used for calculating how long our voting window is
 TIMEZONE = "US/Pacific"
+
+# used to trigger a fallback if no prs have been merged within this period(in hours)
+FALLBACK_WINDOW = 24

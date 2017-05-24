@@ -225,6 +225,17 @@ def post_rejected_status(api, urn, pr, voting_window, votes, total, threshold):
                 "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
 
 
+def post_pending_status(api, urn, pr, voting_window, votes, total, threshold):
+    sha = pr["head"]["sha"]
+
+    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_human = misc.seconds_to_human(remaining_seconds)
+    votes_summary = formatted_votes_short_summary(votes, total, threshold)
+
+    post_status(api, urn, sha, "pending",
+                "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
+
+
 def post_status(api, urn, sha, state, description):
     """ apply an issue label to a pr """
     path = "/repos/{urn}/statuses/{sha}".format(urn=urn, sha=sha)

@@ -1,1 +1,1 @@
-From Alpine:latest
+From python:onbuild

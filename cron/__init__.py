@@ -6,5 +6,5 @@ from .restart_homepage import restart_homepage as restart_homepage
 
 def schedule_jobs():
     schedule.every(settings.PULL_REQUEST_POLLING_INTERVAL_SECONDS).seconds.do(poll_pull_requests)
-    schedule.every(settings.FALLBACK_WINDOW).hours.do(check_fallback)
+    schedule.every(settings.FALLBACK_WINDOW_SECONDS).seconds.do(check_fallback)
     schedule.every(120).seconds.do(restart_homepage)

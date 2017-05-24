@@ -61,6 +61,15 @@ Emoji which count as votes are:
 Chaosbot has died 6 times.  This counter is incremented whenever the trunk breaks
 and the server must be restarted manually.  Last broken by #97
 
+## Rulers
+
+Chaosbot has been ruled by:
+- Democracy
+- Anarchy with [#48](https://github.com/chaosbot/chaos/pull/48)
+- Democracy, as the anarchy commit crashed the server and was reverted
+- @PlasmaPower with [#138](https://github.com/chaosbot/chaos/pull/138)
+- Democracy, as PlasmaPower relinquished his control with [#153](https://github.com/chaosbot/chaos/pull/153)
+
 ## Server details
 
 * **ChaosBot runs with Python 3.6.1 on Ubuntu 14.04 Trusty**

@@ -39,6 +39,8 @@ your will.
 There is no set purpose.  What ChaosBot makes itself into is entirely up to
 the imagination of the open source community.
 
+Wondering how to contribute? Try implementing a feature requested [here](https://github.com/chaosbot/chaos/wiki/Feature-Requests).
+
 ## Voting
 
 Votes on a PR are determined through following mechanism:
@@ -60,6 +62,15 @@ Emoji which count as votes are:
 
 Chaosbot has died 6 times.  This counter is incremented whenever the trunk breaks
 and the server must be restarted manually.  Last broken by #97
+
+## Rulers
+
+Chaosbot has been ruled by:
+- Democracy
+- Anarchy with [#48](https://github.com/chaosbot/chaos/pull/48)
+- Democracy, as the anarchy commit crashed the server and was reverted
+- @PlasmaPower with [#138](https://github.com/chaosbot/chaos/pull/138)
+- Democracy, as PlasmaPower relinquished his control with [#153](https://github.com/chaosbot/chaos/pull/153)
 
 ## Server details
 

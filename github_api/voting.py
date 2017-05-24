@@ -129,9 +129,7 @@ def get_vote_sum(api, votes):
     total """
     total = 0
     for user, vote in votes.items():
-        # I'm doing this just to see what will happen
-        # I'll revert it if it succeeds
-        weight = 1.0 if user.lower() == "plasmapower" else 0.0
+        weight = get_vote_weight(api, user)
         total += weight * vote
 
     return total
@@ -196,8 +194,8 @@ def get_voting_window(now):
     lhour = local.hour
 
     hours = settings.DEFAULT_VOTE_WINDOW
-    if (settings.AFTER_HOURS_START >= lhour or
-            settings.AFTER_HOURS_END <= lhour):
+    if (lhour >= settings.AFTER_HOURS_START or
+            lhour <= settings.AFTER_HOURS_END):
         hours = settings.AFTER_HOURS_VOTE_WINDOW
 
     seconds = hours * 60 * 60

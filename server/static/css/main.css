@@ -1,17 +1,37 @@
-body {
-    background-color: #B0C4DE;
-    font-size: 2em;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
 }
 
+html {
+    font-family: 'Roboto', sans-serif;
+    text-rendering: optimizeLegibility;
+    font-size: 18px;
+    background-color: #2c2c2c;
+    text-align: justify;
+}
+
+h1 {
+    font-size: 80px;
+    letter-spacing: .10em;
+}
+
+body {}
+
 .container {
-    display: block;
-    background-color: #fff;
-    padding: 15px;
+    padding: 0 5% 0 5%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    min-width: 600px;
+    max-width: 40em;
 }
 
 .content {
-    display: block;
-    width: 100%;
+    text-align: center;
+    min-width: 2em;
+    max-width: 60em;
 }
 
 #github-ribbon {
@@ -23,4 +43,9 @@ body {
 
 .unclickable {
     z-index: 1;
+}
+
+.content-title {
+    border: 5px;
+    border-style: solid;
 }

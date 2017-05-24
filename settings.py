@@ -22,10 +22,10 @@ with open(abs_pat_file) as h:
 GITHUB_USER = "chaosbot"
 
 # TEST SETTING PLEASE IGNORE
-TEST = False 
+TEST = False
 
-# the amount of time chaosbot should sleep between polling for ready prs
-SLEEP_TIME = 30
+# the number of seconds chaosbot should sleep between polling for ready prs
+PULL_REQUEST_POLLING_INTERVAL_SECONDS = 30
 
 # the scaling factor for how big voting windows are
 VOTE_WINDOW_SCALE = 1.0

@@ -1,5 +1,7 @@
 # ChaosBot
 
+[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/Lobby)
+
 > Chaos, the vacant and infinite space which existed according to the ancient
 > cosmogonies previous to the creation of the world, and out of which the gods,
 > men, and all things arose.
@@ -52,8 +54,8 @@ Votes on a PR are determined through following mechanism:
 
 ## Death Counter
 
-Chaosbot has died 4 times.  This counter is incremented whenever the trunk breaks
-and the server must be restarted manually.
+Chaosbot has died 6 times.  This counter is incremented whenever the trunk breaks
+and the server must be restarted manually.  Last broken by #97
 
 ## Server details
 
@@ -61,8 +63,7 @@ and the server must be restarted manually.
 * **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.
-* **Its domain name is [chaosthebot.com](http://chaosthebot.com),** but nothing is listening on
-any port...yet.
+* **Its domain name is [chaosthebot.com](http://chaosthebot.com)**.
 * **It's hosted on a low-tier machine in the cloud.**  This means there aren't a
 ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory,
 1 cpu core.  Try not to deliberately DoS it.

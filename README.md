@@ -21,6 +21,8 @@ direction of a software project is turned over to the open source community.
    restart itself.
 1. Go to \#1
 
+![How chaosbot works, in a gif](https://i.imgur.com/ytBPLKC.gif)
+
 In effect, you get to change the basic purpose and functionality of ChaosBot, at
 your discretion.
 

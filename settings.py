@@ -31,14 +31,14 @@ AFTER_HOURS_START = 22
 # The hour when the after hours end
 AFTER_HOURS_END = 10
 
-OWNER = "chaosbot"
-PROJECT = "Chaos"
+OWNER = GITHUB_USER
+PROJECT = "chaos"
 URN = OWNER + "/" + PROJECT
 
-# voter controls below
-## how old do they have to be for their vote to count?
-MIN_VOTER_AGE = 1 * 30 * 24 * 60 * 60 # 1 month
-## at what follower count does a voter's social weight become 1.0?
+# how old do voters have to be for their vote to count?
+MIN_VOTER_AGE = 1 * 30 * 24 * 60 * 60  # 1 month
+
+# at what follower count does a voter's social weight become 1.0?
 FOLLOWER_LOG_BASE = 30
 
 # for a pr to be merged, the vote total must have at least this fraction of the

@@ -1,5 +1,6 @@
 import arrow
 import logging
+import os
 from os.path import join, abspath, dirname
 
 import settings
@@ -44,6 +45,11 @@ def poll_pull_requests():
                 continue
 
             gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
+
+            # chaosbot rewards merge owners with a follow
+            pr_owner = pr["user"]["login"]
+            gh.users.follow_user(api, pr_owner)
+
             needs_update = True
 
         else:

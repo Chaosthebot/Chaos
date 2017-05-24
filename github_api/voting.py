@@ -171,7 +171,7 @@ def parse_emojis_for_vote(body):
     return 0
 
 def prepare_emojis_list(type):
-    fname = "emojis.{type}".format(type=type)
+    fname = "data/emojis.{type}".format(type=type)
     with open(fname) as f:
         content = f.readlines()
     content = [x.strip() for x in content]

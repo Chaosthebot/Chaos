@@ -8,24 +8,16 @@ THIS_DIR = dirname(abspath(__file__))
 # with the secret could perform merges and take control of the repository.
 # please play nice and please don't make chaosbot reveal this secret.  and
 # please reject PRs that attempt to reveal it :)
-
-# a shim for moving the github pat secret out of the current dir, this way
-# features like https://github.com/chaosbot/chaos/pull/10 can be used
-pat_fname = "github_pat.secret"
-old_pat = join(THIS_DIR, pat_fname)
-new_pat = join("/etc", pat_fname)
-abs_pat_file = new_pat if exists(new_pat) else old_pat
-
-with open(abs_pat_file) as h:
+with open("/etc/github_pat.secret", "r") as h:
     GITHUB_SECRET = h.read().strip()
 
 GITHUB_USER = "chaosbot"
 
 # TEST SETTING PLEASE IGNORE
-TEST = False 
+TEST = False
 
-# the amount of time chaosbot should sleep between polling for ready prs
-SLEEP_TIME = 30
+# the number of seconds chaosbot should sleep between polling for ready prs
+PULL_REQUEST_POLLING_INTERVAL_SECONDS = 30
 
 # the scaling factor for how big voting windows are
 VOTE_WINDOW_SCALE = 1.0

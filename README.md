@@ -1,5 +1,7 @@
 # ChaosBot
 
+[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/Lobby)
+
 > Chaos, the vacant and infinite space which existed according to the ancient
 > cosmogonies previous to the creation of the world, and out of which the gods,
 > men, and all things arose.
@@ -7,7 +9,7 @@
 ChaosBot is a social coding experiment to see what happens when the absolute
 direction of a software project is turned over to the open source community.
 
-![There was clearly a kitty missing.](http://thecatapi.com/api/images/get?format=src&type=png&size=small)
+![Image of a kitten with overlay: "I WONDER IF BEING SANE MEANS DISREGARDING THE CHAOS THAT IS LIFE...PRETENDING ONLY AN INFINITESIMAL SEGMENT OF IT IS REALITY" Source: http://existentialpets.tumblr.com/post/48069725344](assets/chaos-kitty.jpg)
 
 ## How it works
 
@@ -39,38 +41,29 @@ the imagination of the open source community.
 
 ## Voting
 
-Votes on a PR are sourced through the following mechanisms:
-* A comment that contains :+1: or :-1: somewhere in the body
-* A :+1: or :-1: reaction on the PR itself
-* An accept/reject [pull request review](https://help.github.com/articles/about-pull-request-reviews/)
-* The PR itself counts as :+1: from the owner
-
-### Weights and thresholds
-
-Votes are not counted as simple unit votes.  They are adjusted by taking the log
-of a user's followers, to the base of some low follower count.  The idea is that
-voters with more followers should have more weight in their vote, but not so much
-that it is overpowering.
-
-Vote thresholds must also be met for a PR to be approved.  This is determined as
-a percentage of the number of watchers on the repository.  **However, it is more
-important to vote against bad PRs than to assume the minimum threshold will not
-be met.**
-
-See the source code for more details.
+Votes on a PR are determined through following mechanism:
+* A comment that contains :+1: or :-1: somewhere in the body counts as a vote for
+  or against the PR.
+* Same for :+1: or :-1: reaction on the PR itself and an accept/reject [pull
+  request review](https://help.github.com/articles/about-pull-request-reviews/)
+* The PR itself counts as :+1: from the owner.
+* Voting goes on for the duration of the voting window - currently 2 or 3 hours,
+  depending on the local server time.
+* While the voting process is going, users can change their reactions and edit
+  their comments, effectively changing their vote.
 
 ## Death Counter
 
-Chaosbot has died 2 times.  This counter is incremented whenever the trunk breaks
-and the server must be restarted manually.
+Chaosbot has died 6 times.  This counter is incremented whenever the trunk breaks
+and the server must be restarted manually.  Last broken by #97
 
 ## Server details
+
 * **ChaosBot runs Ubuntu 14.04 Trusty**
 * **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.
-* **Its domain name is chaosthebot.com,** but nothing is listening on
-any port...yet.
+* **Its domain name is [chaosthebot.com](http://chaosthebot.com)**.
 * **It's hosted on a low-tier machine in the cloud.**  This means there aren't a
 ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory,
 1 cpu core.  Try not to deliberately DoS it.
@@ -84,8 +77,8 @@ will manually be restarted and the death counter will be incremented.
 
 #### Q: What is "general approval" from the community?
 A: Users must vote on your PR, through either a :+1: or :-1: comment or reaction,
-or a accept/reject pull request review.  See [Voting](https://github.com/chaosbot/Chaos/blob/master/README.md#voting)
+or a accept/reject pull request review.  See [Voting](https://github.com/chaosbot/Chaos/blob/master/README.md#voting).
 
-#### Q: What if ChaosBot has an problem that can't be solved by a PR?
+#### Q: What if ChaosBot has a problem that can't be solved by a PR?
 A: Please open a [project issue](https://github.com/chaosbot/Chaos/issues) and a
 real live human will take a look at it.

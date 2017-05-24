@@ -38,9 +38,6 @@ URN = OWNER + "/" + PROJECT
 # how old do voters have to be for their vote to count?
 MIN_VOTER_AGE = 1 * 30 * 24 * 60 * 60  # 1 month
 
-# at what follower count does a voter's social weight become 1.0?
-FOLLOWER_LOG_BASE = 30
-
 # for a pr to be merged, the vote total must have at least this fraction of the
 # number of watchers in order to pass.  this is to prevent early manipulation of
 # the project by requiring some basic consensus.

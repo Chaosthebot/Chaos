@@ -39,7 +39,7 @@ your will.
 There is no set purpose.  What ChaosBot makes itself into is entirely up to
 the imagination of the open source community.
 
-Wondering how to contribute? Try adding a feature requested [here](https://github.com/chaosbot/chaos/wiki/Feature-Requests).
+Wondering how to contribute? Try implementing a feature requested [here](https://github.com/chaosbot/chaos/wiki/Feature-Requests).
 
 ## Voting
 

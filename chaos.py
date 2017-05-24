@@ -30,9 +30,8 @@ class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self):
         # Load fortunes
         self.fortunes = []
-        with open("fortunes.txt", "r", encoding="utf8") as f:
+        with open("data/fortunes.txt", "r", encoding="utf8") as f:
             self.fortunes = f.read().split("\n%\n")
-
         # Call superclass constructor
         super(HTTPServerRequestHandler, self).__init__()
 
@@ -68,8 +67,8 @@ def main():
     server_dir = join(dirname(abspath(__file__)), "server")
     subprocess.Popen([sys.executable, "server.py"], cwd=server_dir)
 
-    log.info("starting http server")
-    start_http_server()
+    #log.info("starting http server")
+    #start_http_server()
 
     # Schedule all cron jobs to be run
     cron.schedule_jobs()

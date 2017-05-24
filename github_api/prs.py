@@ -247,7 +247,7 @@ def merge_random(api, urn, message):
     open_prs = get_open_prs(api, urn)
     pr_selected = False
     pr = {}
-    while pr_selected:
+    while not pr_selected:
         pr = random.choice(open_prs)
         pr_selected = get_is_mergeable(api, urn, pr['number'])
     merge_pr_message_only(api, urn, pr, message)

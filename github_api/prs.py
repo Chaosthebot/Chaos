@@ -118,12 +118,6 @@ def get_ready_prs(api, urn, window):
         updated = get_pr_last_updated(pr)
         delta = (now - updated).total_seconds()
 
-        # TODO
-        # i would like to do this, but it turns out, the "mergeable" field only
-        # exists on individual prs fetched through the api, not prs in paginated
-        # form
-        #mergeable = pr["mergeable"] is True
-
         is_wip = "WIP" in pr["title"]
 
         if not is_wip and delta > window:
@@ -132,7 +126,10 @@ def get_ready_prs(api, urn, window):
             # in the paginated list of PRs, but 404s when trying to fetch it
             # directly
             if get_is_mergeable(api, urn, pr_num):
+                label_pr(api, urn, pr, "mergeable")
                 yield pr
+            else
+                label_pr(api, urn, pr, "conflicts")
 
 
 def get_pr_reviews(api, urn, pr_num):

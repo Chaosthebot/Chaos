@@ -193,9 +193,10 @@ def get_voting_window(now):
     local = now.to(settings.TIMEZONE)
     lhour = local.hour
 
-    hours = 2
-    if lhour <= 10 or lhour >= 22:
-        hours = 3
+    hours = settings.DEFAULT_VOTE_WINDOW
+    if (settings.AFTER_HOURS_START >= lhours or
+            settings.AFTER_HOURS_END <= lhours):
+        hours = settings.AFTER_HOURS_VOTE_WINDOW
 
-    seconds = hours * 60 * 60 * settings.VOTE_WINDOW_SCALE
+    seconds = hours * 60 * 60
     return seconds

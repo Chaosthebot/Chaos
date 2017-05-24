@@ -30,9 +30,8 @@ class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self):
         # Load fortunes
         self.fortunes = []
-        with open("fortunes.txt", "r", encoding="utf8") as f:
+        with open("data/fortunes.txt", "r", encoding="utf8") as f:
             self.fortunes = f.read().split("\n%\n")
-
         # Call superclass constructor
         super(HTTPServerRequestHandler, self).__init__()
 

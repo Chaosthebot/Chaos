@@ -1,2 +1,2 @@
 #!/bin/sh
-pip install -r requirements.txt
+/root/.virtualenvs/chaos/bin/pip install -r requirements.txt

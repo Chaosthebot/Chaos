@@ -43,9 +43,8 @@ FOLLOWER_LOG_BASE = 30
 
 # for a pr to be merged, the vote total must have at least this fraction of the
 # number of watchers in order to pass.  this is to prevent early manipulation of
-# the project by requiring some basic consensus.  i'm not sure its necessary, so
-# it's 0
-MIN_VOTE_WATCHERS = 0
+# the project by requiring some basic consensus.
+MIN_VOTE_WATCHERS = 0.01
 
 # unauthenticated api requests get 60 requests/hr, so we need to get as much
 # data from each request as we can.  apparently 100 is the max number of pages

@@ -142,7 +142,7 @@ def get_ready_prs(api, urn, window):
             if get_is_mergeable(api, urn, pr_num):
                 label_pr(api, urn, pr, "mergeable")
                 yield pr
-            else
+            else:
                 label_pr(api, urn, pr, "conflicts")
 
 

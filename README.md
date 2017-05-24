@@ -63,7 +63,10 @@ and the server must be restarted manually.  Last broken by #97
 
 ## Server details
 
-* **ChaosBot runs with Python 3.5 on Ubuntu 14.04 Trusty**
+* **ChaosBot runs with Python 3.6.1 on Ubuntu 14.04 Trusty**
+* **Its process is managed under [supervisor](http://supervisord.org/).**  Avoid
+writing your own process-management tooling unless it is going to replace
+supervisor completely.
 * **It has root access on its server.**  This means you are able to install
 packages and perform other privileged operations, provided you can initiate those
 changes through a pull request.

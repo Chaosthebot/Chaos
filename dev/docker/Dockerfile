@@ -18,9 +18,18 @@ RUN apt-get -y install\
         supervisor\
         curl
 
+# for python 3.6
 RUN add-apt-repository ppa:fkrull/deadsnakes
 RUN apt-get -y update
-RUN apt-get -y install python3.6
+
+# python requirement dependencies
+RUN apt-get -y install\
+        python3.6\
+        # dependencies for ansible's dependency module "cryptography"
+        build-essential\
+        libpython3.6-dev\
+        libssl-dev\
+        libffi-dev
 
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python3.6 -
@@ -28,21 +37,13 @@ RUN pip install virtualenv
 
 ENV venvs=/root/.virtualenvs
 ENV venv=$venvs/chaos
-ENV chaosdir=/root/workspace/chaos
+ENV chaosdir=/root/workspace/Chaos
 
 RUN mkdir -p $chaosdir
 RUN mkdir $venvs
-RUN virtualenv chaos
+RUN virtualenv $venv
 
 ENV PATH="$venv:$PATH"
-
-# python requirement dependencies
-RUN apt-get -y install\
-        # dependencies for ansible's dependency module "cryptography"
-        build-essential\
-        libpython3.6-dev\
-        libssl-dev\
-        libffi-dev
 
 WORKDIR $chaosdir
 
@@ -50,4 +51,11 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 
-ENTRYPOINT
+RUN printf "\
+    ln -sf /root/workspace/Chaos/etc/chaos_supervisor.conf /etc/supervisor/conf.d/chaos.conf\n\
+    service supervisor start\n\
+    sleep 1\n\
+    tail -F /var/log/supervisor/chaos-*"\
+    >> /root/start_chaos.sh
+
+ENTRYPOINT bash /root/start_chaos.sh

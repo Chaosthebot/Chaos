@@ -29,6 +29,14 @@ See merge-commit {sha} for more details.
     """.strip().format(summary=votes_summary, sha=sha)
     return leave_comment(api, urn, pr, body)
 
+def leave_stale_comment(api, urn, pr, hours):
+    body = """
+:no_good: This PR has merge conflicts, and hasn't been touched in {hours} hours. Closing.
+
+Open a new PR with the merge conflicts fixed to restart voting.
+    """.strip().format(hours=hours)
+    return leave_comment(api, urn, pr, body)
+
 def leave_comment(api, urn, pr, body):
     path = "/repos/{urn}/issues/{pr}/comments".format(urn=urn, pr=pr)
     data = {"body": body}

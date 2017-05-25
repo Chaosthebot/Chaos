@@ -23,15 +23,16 @@ body {}
 .container {
     padding: 0 5% 0 5%;
     margin: 0 auto;
+    text-align: center;
     background-color: #FFFFFF;
     min-width: 600px;
-    max-width: 40em;
+    max-width: 100%;
 }
 
 .content {
     text-align: center;
     min-width: 2em;
-    max-width: 60em;
+    padding: 0 25%;
 }
 
 #github-ribbon {
@@ -39,10 +40,6 @@ body {}
     top: 0;
     right: 0;
     border: 0;
-}
-
-.unclickable {
-    z-index: 1;
 }
 
 .content-title {

@@ -1,18 +1,11 @@
 import arrow
 import settings
-import random
 from . import misc
 from . import voting
 from . import exceptions as exc
 
 
 def merge_pr(api, urn, pr, votes, total, threshold):
-    """ merge a pull request, if possible, and use a nice detailed merge commit
-    message """
-    votes_summary = formatted_votes_summary(votes, total, threshold)
-    merge_pr_message_only(api, urn, pr, votes_summary)
-
-def merge_pr_message_only(api, urn, pr, message):
     """ merge a pull request, if possible, and use a nice detailed merge commit
     message """
 
@@ -26,7 +19,7 @@ def merge_pr_message_only(api, urn, pr, message):
     if record:
         record = "Vote record:\n" + record
 
-    votes_summary = message
+    votes_summary = formatted_votes_summary(votes, total, threshold)
 
     pr_url = "https://github.com/{urn}/pull/{pr}".format(urn=urn, pr=pr_num)
 
@@ -252,12 +245,3 @@ def post_status(api, urn, sha, state, description):
         "context": "chaosbot"
     }
     api("POST", path, json=data)
-
-def merge_random(api, urn, message):
-    open_prs = get_open_prs(api, urn)
-    pr_selected = False
-    pr = {}
-    while not pr_selected:
-        pr = random.choice(open_prs)
-        pr_selected = get_is_mergeable(api, urn, pr['number'])
-    merge_pr_message_only(api, urn, pr, message)

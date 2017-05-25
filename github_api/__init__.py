@@ -38,14 +38,19 @@ class API(object):
         self._reset = 0
 
     def __call__(self, method, path, **kwargs):
-        # sleep for a cooldown period, so we don't exhaust our api requests in
-        # the middle of doing something important
-        now = time.time()
-        reset_in = max(self._reset - now, 0)
-        cooldown = compute_api_cooldown(self._remaining, reset_in)
-        log.debug("requests remaining: %s, reset in: %ds, cooldown sleep: %0.2fs",
-                self._remaining, reset_in, cooldown)
-        time.sleep(cooldown)
+
+        # if we're not using auth, it's a safe bet we're in dev mode, in which
+        # case we're disabling cooldowns, because otherwise we'll be sleeping
+        # for like 20s between api calls
+        if self._auth:
+            # sleep for a cooldown period, so we don't exhaust our api requests in
+            # the middle of doing something important
+            now = time.time()
+            reset_in = max(self._reset - now, 0)
+            cooldown = compute_api_cooldown(self._remaining, reset_in)
+            log.debug("requests remaining: %s, reset in: %ds, cooldown sleep: %0.2fs",
+                    self._remaining, reset_in, cooldown)
+            time.sleep(cooldown)
 
         url = self.BASE_URL+path
         if re.match("https?://", path):

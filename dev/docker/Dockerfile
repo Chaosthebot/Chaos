@@ -43,7 +43,7 @@ RUN mkdir -p $chaosdir
 RUN mkdir $venvs
 RUN virtualenv $venv
 
-ENV PATH="$venv:$PATH"
+ENV PATH="$venv/bin:$PATH"
 
 WORKDIR $chaosdir
 
@@ -58,4 +58,5 @@ RUN printf "\
     tail -F /var/log/supervisor/chaos-*"\
     >> /root/start_chaos.sh
 
+EXPOSE 80 8081
 ENTRYPOINT bash /root/start_chaos.sh

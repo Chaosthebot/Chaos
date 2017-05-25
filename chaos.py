@@ -28,7 +28,6 @@ import encryption
 from github_api import exceptions as gh_exc
 
 
-
 def main():
     logging.basicConfig(
         level=logging.DEBUG,
@@ -56,6 +55,7 @@ def main():
         # Run any scheduled jobs on the next second.
         schedule.run_pending()
         time.sleep(1)
+
 
 if __name__ == "__main__":
     main()

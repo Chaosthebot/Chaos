@@ -1,3 +1,3 @@
 #!/bin/sh
 /root/.virtualenvs/chaos/bin/pip install -Ur requirements.txt
-apt-get -y install puppet
+ansible-playbook ansible/apt.yml

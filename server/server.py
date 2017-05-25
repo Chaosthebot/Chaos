@@ -15,7 +15,7 @@ set_proc_name("chaos_server")
 PORT = 80
 Handler = http.server.SimpleHTTPRequestHandler
 
-class NoTimeWaitTCPServer(socketserver.TCPServer):
+class NoTimeWaitTCPServer(socketserver.ThreadingTCPServer):
     """ when a socket does is shutdown dance, it ends up in a TIME-WAIT state,
     which can prevent rebinding on it quickly.  here we say "shut up, socket",
     let me rebind anyways even if you're in TIME-WAIT."  that will teach it. """

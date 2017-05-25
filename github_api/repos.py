@@ -11,8 +11,8 @@ def get_num_watchers(api, urn):
 def get_latest_commit(api, urn):
     path = "/repos/{urn}/commits".format(urn=urn)
     data = api("get", path)
-    if(len(data) > 0)
+    if(len(data) > 0):
         return data[0]
-    else
+    else:
         return None
 

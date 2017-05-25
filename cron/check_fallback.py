@@ -13,7 +13,7 @@ def  check_fallback():
     commit_time = arrow.get(latest_commit.get_commit_date())
     now = arrow.utcnow()
     span = now - commit_time
-    if(span.seconds < setings.FALLBACK_WINDOW_SECONDS)
+    if(span.seconds < setings.FALLBACK_WINDOW_SECONDS):
         # it happened
         message = "No pull requests were approved in the last {fallback_hours} hours. Therefore, a random compatible PR was chosen to be merged in spite of current voting status.".format(fallback_hours=settings.FALLBACK_WINDOW_HOURS)
         gh.merge_random(api, urn, message)

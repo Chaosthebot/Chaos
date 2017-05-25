@@ -21,6 +21,8 @@ direction of a software project is turned over to the open source community.
    restart itself.
 1. Go to \#1
 
+![How chaosbot works, in a gif](https://i.imgur.com/ytBPLKC.gif)
+
 In effect, you get to change the basic purpose and functionality of ChaosBot, at
 your discretion.
 
@@ -39,6 +41,8 @@ your will.
 There is no set purpose.  What ChaosBot makes itself into is entirely up to
 the imagination of the open source community.
 
+Wondering how to contribute? Try implementing a feature requested [here](https://github.com/chaosbot/chaos/wiki/Feature-Requests).
+
 ## Voting
 
 Votes on a PR are determined through following mechanism:
@@ -53,13 +57,23 @@ Votes on a PR are determined through following mechanism:
   their comments, effectively changing their vote.
   
 Emoji which count as votes are:
-* +1: :+1: :heart: :tada:
-* -1: :-1: :confused:
+* +1: :+1: :thumbsup: :heart: :two_hearts: :blue_heart: :purple_heart: :green_heart: :yellow_heart: :heartpulse: :sparkling_heart: :tada: :heart_eyes: :grin: :grinning: :joy: :ok_hand: :fire: :metal: :raised_hands: :100: :heavy_check_mark: :white_check_mark: :ballot_box_with_check: :accept: :congratulations: 
+* -1: :-1: :thumbsdown: :confused: :x: :interrobang: :heavy_multiplication_x: :put_litter_in_its_place: :no_entry: :negative_squared_cross_mark: :worried: :frowning: :anguished: :grimacing: :cold_sweat: :disappointed: :weary: :confounded: :cry: :tired_face: :broken_heart: :hankey: :poop: :shit: :fu: :no_good: :person_frowning: 
 
 ## Death Counter
 
-Chaosbot has died 6 times.  This counter is incremented whenever the trunk breaks
-and the server must be restarted manually.  Last broken by #97
+Chaosbot has died 11 times.  This counter is incremented whenever the trunk
+breaks and the server must be restarted manually.  Last broken by
+[#120](https://github.com/chaosbot/chaos/pull/120)
+
+## Rulers
+
+Chaosbot has been ruled by:
+- Democracy
+- Anarchy with [#48](https://github.com/chaosbot/chaos/pull/48)
+- Democracy, as the anarchy commit crashed the server and was reverted
+- @PlasmaPower with [#138](https://github.com/chaosbot/chaos/pull/138)
+- Democracy, as PlasmaPower relinquished his control with [#153](https://github.com/chaosbot/chaos/pull/153)
 
 ## Server details
 

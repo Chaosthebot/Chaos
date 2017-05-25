@@ -6,6 +6,7 @@ Flask==0.12.2
 itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
+cryptography==1.9
 packaging==16.8
 pyparsing==2.2.0
 python-dateutil==2.6.0

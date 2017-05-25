@@ -11,13 +11,13 @@ python -m py_compile $(find . -name '*.py');
 if [ "$?" != "0" ]
 then
   echo "There is syntax error. This may endanger chaos. Pauses updates."
-  rm -r "$TEST_DIR";
+  rm -r -f "$TEST_DIR";
   exit 45
 fi
 
 # End code auditing section
 popd
-rm -r "$TEST_DIR";
+rm -r -f "$TEST_DIR";
 
 git checkout master
 git pull

@@ -35,8 +35,10 @@ AFTER_HOURS_START = 22
 # The hour when the after hours end
 AFTER_HOURS_END = 10
 
-OWNER = "chaosbot"
-PROJECT = "chaos"
+remote = sh.git.config("--get", "remote.origin.url").strip()
+# remote is like "git@github.com:amoffat/chaos.git"
+OWNER, PROJECT = remote.split(":")[1][:-4].split("/")
+
 URN = OWNER + "/" + PROJECT
 
 # how old do voters have to be for their vote to count?

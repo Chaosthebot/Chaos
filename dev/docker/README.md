@@ -37,8 +37,29 @@ This will run the Dockerfile and produce your docker image with the name
 
 Make sure you're in `dev/docker/` and run `bash run.sh`. 
 
-## Developing
+## Development Cycle
 
-The repo dir is mounted inside the your running docker container.  What this
-means is that files created or edited inside the container, in
-`/root/workspace/chaos`, will not exist outside the container.
+The repo dir exists as a mounted [data
+volume](https://docs.docker.com/engine/tutorials/dockervolumes/#data-volumes)
+inside the your running docker container.  What this means is that files created
+or edited inside the container, in `/root/workspace/chaos` -- will exist
+outside the container, and vice versa.
+
+1. Edit your files locally and make your changes.
+2. Run `bash run.sh`.
+3. Watch chaos startup in your terminal, tailing its error and stdout logs.
+4. Make some dummy pull requests or whatever **on your github fork.**
+5. Watch chaos interact with your github fork, as if it was the main
+   `chaosbot/chaos` repo.
+6. Open a PR to `chaosbot/chaos` once you're convinced your changes work.
+
+## Monitoring
+
+The environment inside the docker image should be very very close to what's
+actually on production.  As such, any servers started by chaos inside the
+container may be accessed from your host machine.  At the time of this writing,
+there are currently two servers running:
+
+### container port => host port
+* 80 => 8082 - python server/server.py webserver
+* 8081 => 8081 - nginx static directory to `/var/log/supervisor`

@@ -92,6 +92,12 @@ ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory
 
 ### Local Development Server
 
+#### Docker
+
+[Readme](/dev/docker/README.md)
+
+#### Vagrant
+
 To run your own VM for local development, install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then, type on your host machine:
 
     vagrant up

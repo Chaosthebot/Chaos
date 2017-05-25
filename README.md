@@ -77,7 +77,7 @@ Chaosbot has been ruled by:
 
 ## Server details
 
-* **ChaosBot runs with Python 3.6.1 on Ubuntu 14.04 Trusty**
+* **ChaosBot runs with Python 3.6.1 on Ubuntu 14.04 Trusty.**
 * **Its process is managed under [supervisor](http://supervisord.org/).**  Avoid
 writing your own process-management tooling unless it is going to replace
 supervisor completely.
@@ -87,7 +87,7 @@ changes through a pull request.
 * **Its domain name is [chaosthebot.com](http://chaosthebot.com)**.
 * **It's hosted on a low-tier machine in the cloud.**  This means there aren't a
 ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory,
-1 cpu core.  Try not to deliberately DoS it.
+and 1 CPU core.  Try not to deliberately DoS it.
 * **MySQL is installed locally.**
 
 ### Local Development Server

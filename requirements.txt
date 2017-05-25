@@ -2,9 +2,11 @@ ansible==2.3.0.0
 appdirs==1.4.3
 arrow==0.10.0
 cryptography==1.8.1
+Jinja2==2.9.6
 packaging==16.8
 pyparsing==2.2.0
 python-dateutil==2.6.0
+PyYAML==3.12
 requests==2.14.2
 schedule==0.4.2
 six==1.10.0

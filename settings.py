@@ -1,4 +1,7 @@
 from os.path import exists, abspath, dirname, join
+import misc
+
+
 THIS_DIR = dirname(abspath(__file__))
 
 # this is a personal access token used by chaosbot to perform merges and other
@@ -8,10 +11,22 @@ THIS_DIR = dirname(abspath(__file__))
 # with the secret could perform merges and take control of the repository.
 # please play nice and please don't make chaosbot reveal this secret.  and
 # please reject PRs that attempt to reveal it :)
-with open("/etc/github_pat.secret", "r") as h:
+_pat_name = "github_pat.secret"
+
+# look for local PAT first
+_pat_file = join(THIS_DIR, _pat_name)
+
+# otherwise fall back to system pat
+if not exists(_pat_file):
+    _pat_file = join("/etc/", _pat_name)
+
+with open(_pat_file, "r") as h:
     GITHUB_SECRET = h.read().strip()
 
-GITHUB_USER = "chaosbot"
+# unique globally accessible name for the repo on github.  typically looks like
+# "chaosbot/chaos"
+URN = misc.get_self_urn()
+GITHUB_USER = URN.split("/")[0]
 
 # TEST SETTING PLEASE IGNORE
 TEST = False
@@ -30,10 +45,6 @@ AFTER_HOURS_START = 22
 
 # The hour when the after hours end
 AFTER_HOURS_END = 10
-
-OWNER = GITHUB_USER
-PROJECT = "chaos"
-URN = OWNER + "/" + PROJECT
 
 # how old do voters have to be for their vote to count?
 MIN_VOTER_AGE = 1 * 30 * 24 * 60 * 60  # 1 month

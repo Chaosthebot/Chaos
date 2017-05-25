@@ -13,7 +13,7 @@ direction of a software project is turned over to the open source community.
 
 ## How it works
 
-1. Fork the code and make any changes you wish.
+1. Fork the code and make any changes you wish. (see [Development](#development))
 1. Open a pull request.
 1. If there is general approval\* from the community, the PR will be merged
    automatically by ChaosBot.
@@ -60,6 +60,12 @@ Emoji which count as votes are:
 * +1: :+1: :thumbsup: :heart: :two_hearts: :blue_heart: :purple_heart: :green_heart: :yellow_heart: :heartpulse: :sparkling_heart: :tada: :heart_eyes: :grin: :grinning: :joy: :ok_hand: :fire: :metal: :raised_hands: :100: :heavy_check_mark: :white_check_mark: :ballot_box_with_check: :accept: :congratulations: 
 * -1: :-1: :thumbsdown: :confused: :x: :interrobang: :heavy_multiplication_x: :put_litter_in_its_place: :no_entry: :negative_squared_cross_mark: :worried: :frowning: :anguished: :grimacing: :cold_sweat: :disappointed: :weary: :confounded: :cry: :tired_face: :broken_heart: :hankey: :poop: :shit: :fu: :no_good: :person_frowning: 
 
+## Development
+
+### [Docker](/dev/docker/README.md)
+
+### [Vagrant](/dev/vagrant/README.md)
+
 ## Death Counter
 
 Chaosbot has died 13 times.  This counter is incremented whenever the trunk
@@ -89,19 +95,6 @@ changes through a pull request.
 ton of resources available to it: 2TB network transfer, 30GB storage, 2GB memory,
 and 1 CPU core.  Try not to deliberately DoS it.
 * **MySQL is installed locally.**
-
-### Local Development Server
-
-To run your own VM for local development, install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then, type on your host machine:
-
-    vagrant up
-    vagrant ssh
-
-When in SSH:
-
-    sudo su
-    cd /vagrant
-    python3 chaos.py
 
 
 ## FAQ

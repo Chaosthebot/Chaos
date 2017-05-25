@@ -1,4 +1,7 @@
 from os.path import exists, abspath, dirname, join
+import misc
+
+
 THIS_DIR = dirname(abspath(__file__))
 
 GITHUB_USER = None
@@ -35,11 +38,9 @@ AFTER_HOURS_START = 22
 # The hour when the after hours end
 AFTER_HOURS_END = 10
 
-remote = sh.git.config("--get", "remote.origin.url").strip()
-# remote is like "git@github.com:amoffat/chaos.git"
-OWNER, PROJECT = remote.split(":")[1][:-4].split("/")
-
-URN = OWNER + "/" + PROJECT
+# unique globally accessible name for the repo on github.  typically looks like
+# "chaosbot/chaos"
+URN = misc.get_self_urn()
 
 # how old do voters have to be for their vote to count?
 MIN_VOTER_AGE = 1 * 30 * 24 * 60 * 60  # 1 month

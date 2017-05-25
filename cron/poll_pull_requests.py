@@ -71,13 +71,16 @@ def poll_pull_requests():
         else:
             __log.info("PR %d status: will be rejected", pr_num)
 
-            gh.prs.post_rejected_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
-
             if in_window:
+                gh.prs.post_rejected_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
                 __log.info("PR %d rejected, closing", pr_num)
                 gh.comments.leave_reject_comment(api, settings.URN, pr_num, votes, vote_total, threshold)
                 gh.prs.label_pr(api, settings.URN, pr_num, ["rejected"])
                 gh.prs.close_pr(api, settings.URN, pr)
+            elif vote_total < 0:
+                gh.prs.post_rejected_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
+            else:
+                gh.prs.post_pending_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
 
         # This sets up a voting record, with each user having a count of votes
         # that they have cast.
@@ -111,4 +114,3 @@ def poll_pull_requests():
         os.execl(startup_path, startup_path)
 
     __log.info("Waiting %d seconds until next scheduled PR polling event", settings.PULL_REQUEST_POLLING_INTERVAL_SECONDS)
-

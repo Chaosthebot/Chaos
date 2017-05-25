@@ -22,6 +22,9 @@ import github_api.voting
 import github_api.repos
 import github_api.comments
 
+# Has a sideeffect of creating private key if one doesn't exist already
+import encryption
+
 from github_api import exceptions as gh_exc
 
 
@@ -52,7 +55,9 @@ def start_http_server():
     http_server_thread.start()
 
 def main():
-    logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.DEBUG,
+                            format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                            datefmt='%m-%d %H:%M')
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
 

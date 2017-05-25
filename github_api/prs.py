@@ -2,6 +2,7 @@ import arrow
 import settings
 from . import misc
 from . import voting
+from . import comments
 from . import exceptions as exc
 
 
@@ -81,11 +82,13 @@ def formatted_votes_short_summary(votes, total, threshold):
         .strip().format(vfor=vfor, vagainst=vagainst, total=total, threshold=threshold)
 
 
-def label_pr(api, urn, pr, labels):
-    """ apply an issue label to a pr """
-    path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr)
+def label_pr(api, urn, pr_num, labels):
+    """ set a pr's labels (removes old labels) """
+    if not isinstance(labels, (tuple, list)):
+        labels = [labels]
+    path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr_num)
     data = labels
-    resp = api("POST", path, json=data)
+    resp = api("PUT", path, json=data)
 
 
 def close_pr(api, urn, pr):
@@ -132,12 +135,6 @@ def get_ready_prs(api, urn, window):
         updated = get_pr_last_updated(pr)
         delta = (now - updated).total_seconds()
 
-        # TODO
-        # i would like to do this, but it turns out, the "mergeable" field only
-        # exists on individual prs fetched through the api, not prs in paginated
-        # form
-        # mergeable = pr["mergeable"] is True
-
         is_wip = "WIP" in pr["title"]
 
         if not is_wip and delta > window:
@@ -145,8 +142,18 @@ def get_ready_prs(api, urn, window):
             # because there seems to be a race where a freshly-created PR exists
             # in the paginated list of PRs, but 404s when trying to fetch it
             # directly
-            if get_is_mergeable(api, urn, pr_num):
+            mergeable = get_is_mergeable(api, urn, pr_num)
+            if mergeable is True:
+                label_pr(api, urn, pr_num, [])
                 yield pr
+            elif mergeable is False:
+                label_pr(api, urn, pr_num, ["conflicts"])
+                last_update = max(arrow.get(pr["updated_at"]), updated)
+                update_delta = (now - last_update).total_seconds()
+                if update_delta >= 60 * 60 * settings.PR_STALE_HOURS:
+                    comments.leave_stale_comment(api, urn, pr["number"], round(update_delta / 60 / 60))
+                    close_pr(api, urn, pr)
+            # mergeable can also be None, in which case we just skip it for now
 
 
 def voting_window_remaining_seconds(pr, window):
@@ -172,7 +179,7 @@ def get_pr_reviews(api, urn, pr_num):
 
 
 def get_is_mergeable(api, urn, pr_num):
-    return get_pr(api, urn, pr_num)["mergeable"] is True
+    return get_pr(api, urn, pr_num)["mergeable"]
 
 
 def get_pr(api, urn, pr_num):
@@ -223,6 +230,17 @@ def post_rejected_status(api, urn, pr, voting_window, votes, total, threshold):
     votes_summary = formatted_votes_short_summary(votes, total, threshold)
 
     post_status(api, urn, sha, "failure",
+                "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
+
+
+def post_pending_status(api, urn, pr, voting_window, votes, total, threshold):
+    sha = pr["head"]["sha"]
+
+    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_human = misc.seconds_to_human(remaining_seconds)
+    votes_summary = formatted_votes_short_summary(votes, total, threshold)
+
+    post_status(api, urn, sha, "pending",
                 "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
 
 

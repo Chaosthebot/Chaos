@@ -54,3 +54,7 @@ MEMOIZE_CACHE_DIRNAME = "api_cache"
 
 # used for calculating how long our voting window is
 TIMEZONE = "US/Pacific"
+
+# PRs that have merge conflicts and haven't been touched in this many hours
+# will be closed
+PR_STALE_HOURS = 24

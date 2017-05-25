@@ -2,6 +2,7 @@ import arrow
 import settings
 from . import misc
 from . import voting
+from . import comments
 from . import exceptions as exc
 
 
@@ -147,6 +148,11 @@ def get_ready_prs(api, urn, window):
                 yield pr
             elif mergeable is False:
                 label_pr(api, urn, pr_num, ["conflicts"])
+                last_update = max(arrow.get(pr["updated_at"]), updated)
+                update_delta = (now - last_update).total_seconds()
+                if update_delta >= 60 * 60 * settings.PR_STALE_HOURS:
+                    comments.leave_stale_comment(api, urn, pr["number"], round(update_delta / 60 / 60))
+                    close_pr(api, urn, pr)
             # mergeable can also be None, in which case we just skip it for now
 
 

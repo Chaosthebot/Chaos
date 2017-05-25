@@ -141,11 +141,13 @@ def get_ready_prs(api, urn, window):
             # because there seems to be a race where a freshly-created PR exists
             # in the paginated list of PRs, but 404s when trying to fetch it
             # directly
-            if get_is_mergeable(api, urn, pr_num):
+            mergeable = get_is_mergeable(api, urn, pr_num)
+            if mergeable is True:
                 label_pr(api, urn, pr_num, ["mergeable"])
                 yield pr
-            else:
+            elif mergeable is False:
                 label_pr(api, urn, pr_num, ["conflicts"])
+            # mergeable can also be None, in which case we just skip it for now
 
 
 def voting_window_remaining_seconds(pr, window):
@@ -171,7 +173,7 @@ def get_pr_reviews(api, urn, pr_num):
 
 
 def get_is_mergeable(api, urn, pr_num):
-    return get_pr(api, urn, pr_num)["mergeable"] is True
+    return get_pr(api, urn, pr_num)["mergeable"]
 
 
 def get_pr(api, urn, pr_num):

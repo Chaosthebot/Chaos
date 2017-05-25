@@ -30,8 +30,10 @@ class API(object):
         "Accept": "application/vnd.github.squirrel-girl-preview+json"
     }
 
-    def __init__(self, user, pat):
-        self._auth = HTTPBasicAuth(user, pat)
+    def __init__(self, user=None, pat=None):
+        self._auth = None
+        if user and pat:
+            self._auth = HTTPBasicAuth(user, pat)
         self._remaining = math.inf
         self._reset = 0
 

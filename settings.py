@@ -1,6 +1,9 @@
 from os.path import exists, abspath, dirname, join
 THIS_DIR = dirname(abspath(__file__))
 
+GITHUB_USER = None
+GITHUB_SECRET = None
+
 # this is a personal access token used by chaosbot to perform merges and other
 # api requests.  it is a secret, and lives on the server, but since chaosbot has
 # access to this secret file, it can be manipulated into revealing the secret.
@@ -8,10 +11,11 @@ THIS_DIR = dirname(abspath(__file__))
 # with the secret could perform merges and take control of the repository.
 # please play nice and please don't make chaosbot reveal this secret.  and
 # please reject PRs that attempt to reveal it :)
-with open("/etc/github_pat.secret", "r") as h:
-    GITHUB_SECRET = h.read().strip()
-
-GITHUB_USER = "chaosbot"
+_pat_file = "/etc/github_pat.secret"
+if exists(_pat_file):
+    with open(_pat_file, "r") as h:
+        GITHUB_SECRET = h.read().strip()
+    GITHUB_USER = "chaosbot"
 
 # TEST SETTING PLEASE IGNORE
 TEST = False
@@ -31,7 +35,7 @@ AFTER_HOURS_START = 22
 # The hour when the after hours end
 AFTER_HOURS_END = 10
 
-OWNER = GITHUB_USER
+OWNER = "chaosbot"
 PROJECT = "chaos"
 URN = OWNER + "/" + PROJECT
 

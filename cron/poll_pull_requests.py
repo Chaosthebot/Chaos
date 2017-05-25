@@ -77,6 +77,8 @@ def poll_pull_requests():
                 gh.comments.leave_reject_comment(api, settings.URN, pr_num, votes, vote_total, threshold)
                 gh.prs.label_pr(api, settings.URN, pr_num, ["rejected"])
                 gh.prs.close_pr(api, settings.URN, pr)
+            elif vote_total < 0:
+                gh.prs.post_rejected_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
             else:
                 gh.prs.post_pending_status(api, settings.URN, pr, voting_window, votes, vote_total, threshold)
 

@@ -22,6 +22,9 @@ import github_api.voting
 import github_api.repos
 import github_api.comments
 
+# Has a sideeffect of creating private key if one doesn't exist already
+import encryption
+
 from github_api import exceptions as gh_exc
 
 

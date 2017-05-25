@@ -82,12 +82,12 @@ def formatted_votes_short_summary(votes, total, threshold):
 
 
 def label_pr(api, urn, pr_num, labels):
-    """ apply an issue label to a pr """
+    """ set a pr's labels (removes old labels) """
     if not isinstance(labels, (tuple, list)):
         labels = [labels]
     path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr_num)
     data = labels
-    resp = api("POST", path, json=data)
+    resp = api("PUT", path, json=data)
 
 
 def close_pr(api, urn, pr):

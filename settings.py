@@ -26,8 +26,7 @@ with open(_pat_file, "r") as h:
 # unique globally accessible name for the repo on github.  typically looks like
 # "chaosbot/chaos"
 URN = misc.get_self_urn()
-GITHUB_USER = URN.split("/")[0]
-GITHUB_REPO = URN.split("/")[1]
+GITHUB_USER, GITHUB_REPO = URN.split("/")
 
 # TEST SETTING PLEASE IGNORE
 TEST = False

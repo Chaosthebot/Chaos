@@ -1,3 +1,4 @@
+ansible==2.3.0.0
 appdirs==1.4.3
 arrow==0.10.0
 packaging==16.8

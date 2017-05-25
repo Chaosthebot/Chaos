@@ -82,10 +82,12 @@ def formatted_votes_short_summary(votes, total, threshold):
 
 
 def label_pr(api, urn, pr_num, labels):
-    """ apply an issue label to a pr """
+    """ set a pr's labels (removes old labels) """
+    if not isinstance(labels, (tuple, list)):
+        labels = [labels]
     path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr_num)
     data = labels
-    resp = api("POST", path, json=data)
+    resp = api("PUT", path, json=data)
 
 
 def close_pr(api, urn, pr):
@@ -139,11 +141,13 @@ def get_ready_prs(api, urn, window):
             # because there seems to be a race where a freshly-created PR exists
             # in the paginated list of PRs, but 404s when trying to fetch it
             # directly
-            if get_is_mergeable(api, urn, pr_num):
-                label_pr(api, urn, pr_num, "mergeable")
+            mergeable = get_is_mergeable(api, urn, pr_num)
+            if mergeable is True:
+                label_pr(api, urn, pr_num, ["mergeable"])
                 yield pr
-            else:
-                label_pr(api, urn, pr_num, "conflicts")
+            elif mergeable is False:
+                label_pr(api, urn, pr_num, ["conflicts"])
+            # mergeable can also be None, in which case we just skip it for now
 
 
 def voting_window_remaining_seconds(pr, window):
@@ -169,7 +173,7 @@ def get_pr_reviews(api, urn, pr_num):
 
 
 def get_is_mergeable(api, urn, pr_num):
-    return get_pr(api, urn, pr_num)["mergeable"] is True
+    return get_pr(api, urn, pr_num)["mergeable"]
 
 
 def get_pr(api, urn, pr_num):
@@ -220,6 +224,17 @@ def post_rejected_status(api, urn, pr, voting_window, votes, total, threshold):
     votes_summary = formatted_votes_short_summary(votes, total, threshold)
 
     post_status(api, urn, sha, "failure",
+                "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
+
+
+def post_pending_status(api, urn, pr, voting_window, votes, total, threshold):
+    sha = pr["head"]["sha"]
+
+    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_human = misc.seconds_to_human(remaining_seconds)
+    votes_summary = formatted_votes_short_summary(votes, total, threshold)
+
+    post_status(api, urn, sha, "pending",
                 "remaining: {time}, {summary}".format(time=remaining_human, summary=votes_summary))
 
 

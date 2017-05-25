@@ -27,6 +27,7 @@ with open(_pat_file, "r") as h:
 # "chaosbot/chaos"
 URN = misc.get_self_urn()
 GITHUB_USER = URN.split("/")[0]
+GITHUB_REPO = URN.split("/")[1]
 
 # TEST SETTING PLEASE IGNORE
 TEST = False

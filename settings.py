@@ -26,7 +26,7 @@ with open(_pat_file, "r") as h:
 # unique globally accessible name for the repo on github.  typically looks like
 # "chaosbot/chaos"
 URN = misc.get_self_urn()
-GITHUB_USER = URN.split("/")[0]
+GITHUB_USER, GITHUB_REPO = URN.split("/")
 
 # TEST SETTING PLEASE IGNORE
 TEST = False
@@ -65,6 +65,11 @@ MEMOIZE_CACHE_DIRNAME = "api_cache"
 
 # used for calculating how long our voting window is
 TIMEZONE = "US/Pacific"
+
+
+# repo description
+with open("description.txt", "r") as h:
+    REPO_DESCRIPTION = h.read().strip()
 
 # PRs that have merge conflicts and haven't been touched in this many hours
 # will be closed

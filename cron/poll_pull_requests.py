@@ -37,8 +37,8 @@ def poll_pull_requests():
         threshold = gh.voting.get_approval_threshold(api, settings.URN)
         is_approved = vote_total >= threshold
 
-        in_window = gh.prs.is_pr_in_voting_window(api, settings.URN, pr,
-                voting_window)
+        # is our PR in voting window?
+        in_window = gh.prs.is_pr_in_voting_window(pr, voting_window)
 
         if is_approved:
             __log.info("PR %d status: will be approved", pr_num)

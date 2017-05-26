@@ -2,8 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: white;
-
 }
 
 html {
@@ -23,7 +21,6 @@ body {
 }
 
 .container {
-    background-color: transparent;
     z-index: 5;
 }
 
@@ -43,24 +40,20 @@ body {
 }
 
 .content-title {
-    border: 5px;
-    border-style: solid;
-    color: white;
+    border: 5px solid #010101;
+}
+
+.fa, a {
+    color: #010101;
 }
 
 .content-title h1 {
     padding: 0.5em;
     margin-bottom: 0;
-    color: white;
 }
-.subtitle strong {
-  color: white;
-}
-.subtitle {
-  color: white;
-}
-.content {
-  color: white;
+
+.description {
+    background: #fafafa;
 }
 
 #canvas {
@@ -81,7 +74,7 @@ body.transform {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: -1;
+	z-index: -100;
 }
 
 #bg canvas {
@@ -90,6 +83,6 @@ body.transform {
 	left: 0;
 	width: 100%;
 	height: 100%;
-    z-index: -1;
+    z-index: -100;
 }
 /* END BACKGROUND */

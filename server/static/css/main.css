@@ -21,12 +21,7 @@ h1 {
 body {}
 
 .container {
-    padding: 0 5% 0 5%;
-    margin: 0 auto;
-    text-align: center;
     background-color: #FFFFFF;
-    min-width: 600px;
-    max-width: 100%;
 }
 
 .content {

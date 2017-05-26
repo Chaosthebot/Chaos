@@ -1,5 +1,4 @@
-var canvas = document.createElement("canvas");
-document.getElementsByClassName("content")[0].appendChild(canvas);
+var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 canvas.width = 400;

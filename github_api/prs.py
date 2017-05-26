@@ -172,10 +172,15 @@ def get_ready_prs(api, urn, window):
 
 
 def voting_window_remaining_seconds(api, urn, pr, window):
+    """ returns the number of seconds until voting is over.  can be negative,
+    meaning voting has been over for that long """
     now = arrow.utcnow()
-    updated = get_pr_last_updated(api, urn, pr)
-    delta = (now - updated).total_seconds()
-    return window - delta
+    pr_updated = get_pr_last_updated(api, urn, pr)
+
+    # how long since the pr has been updated with new commits
+    elapsed_last_update = (now - pr_updated).total_seconds()
+
+    return window - elapsed_last_update
 
 
 def is_pr_in_voting_window(api, urn, pr, window):

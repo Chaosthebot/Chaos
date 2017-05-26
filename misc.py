@@ -15,10 +15,10 @@ def get_self_urn():
 
     if remote:
         if remote.startswith("git@"):
-            urn = remote.split(":")[1][:-4]
+            urn = remote.split(":")[1]
         else:
             parts = urlparse(remote)
-            urn = parts.path[1:][:-4]
+            urn = parts.path[1:]
 
     # we're not in a git repo, or we have no remotes, so just assume a sensible
     # default

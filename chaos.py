@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
+from os.path import dirname, abspath, join
 import os
+import time
 import sys
 import logging
 import threading
 import http.server
-import random
 import subprocess
 import settings
 import patch
 import schedule
-
-from os.path import dirname, abspath, join
-
 import cron
 import github_api as gh
 import github_api.prs

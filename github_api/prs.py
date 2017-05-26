@@ -1,4 +1,5 @@
 import arrow
+import math
 import settings
 from . import misc
 from . import voting
@@ -120,9 +121,16 @@ def get_pr_last_updated(api, urn, pr_data):
     #
     # NOTE could potentially be deprecated at some point
     # https://developer.github.com/changes/2013-04-25-deprecating-merge-commit-sha/
-    github_test_merge_commit = pr_data["merge_commit_sha"]
-    commit = commits.get_commit(api, urn, github_test_merge_commit)
-    updated = arrow.get(commit["commit"]["committer"]["date"])
+    #
+    # based on https://stackoverflow.com/q/37442144/345059, it looks like it can
+    # be an empty string if the background job is still running, but also handle
+    # cases where the key doesn't exist, and also normalize to None if empty
+    github_test_merge_commit = pr_data.get("merge_commit_sha", None) or None
+
+    updated = None
+    if github_test_merge_commit:
+        commit = commits.get_commit(api, urn, github_test_merge_commit)
+        updated = arrow.get(commit["commit"]["committer"]["date"])
 
     return updated
 
@@ -147,8 +155,12 @@ def get_ready_prs(api, urn, window):
     for pr in open_prs:
         pr_num = pr["number"]
 
-        now = arrow.utcnow()
         updated = get_pr_last_updated(api, urn, pr)
+        # if there's no updated time, don't even consider this PR
+        if not updated:
+            continue
+
+        now = arrow.utcnow()
         delta = (now - updated).total_seconds()
 
         is_wip = "WIP" in pr["title"]
@@ -177,8 +189,12 @@ def voting_window_remaining_seconds(api, urn, pr, window):
     now = arrow.utcnow()
     pr_updated = get_pr_last_updated(api, urn, pr)
 
-    # how long since the pr has been updated with new commits
-    elapsed_last_update = (now - pr_updated).total_seconds()
+    # this is how many seconds ago the pr has been updated with new commits.
+    # if we don't have a last update time, we're setting this to negative
+    # infinity, which says is a mind-bender, but makes the maths work out
+    elapsed_last_update = -math.inf
+    if pr_updated:
+        elapsed_last_update = (now - pr_updated).total_seconds()
 
     return window - elapsed_last_update
 

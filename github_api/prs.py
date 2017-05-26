@@ -109,7 +109,7 @@ def get_pr_last_updated(api, urn, pr_data):
     # read about github's merge test commit
     # https://developer.github.com/v3/pulls/#get-a-single-pull-request
     # essentially what github does is, when it sees a new push to a PR, it will
-    # start a background job to test the commit for mergeability.  this
+    # start a background job to test the PR for mergeability.  this
     # background job creates a magical floating merge commit not really attached
     # to any branch.  however, this commit is real and its committer is
     # "GitHub"...and it has a commit date that we can assume is never malicious.
@@ -117,9 +117,13 @@ def get_pr_last_updated(api, urn, pr_data):
     #
     # using all of these facts, we are able to determine the true, reliable,
     # last update time of the branch backing a PR
+    #
+    # NOTE could potentially be deprecated at some point
+    # https://developer.github.com/changes/2013-04-25-deprecating-merge-commit-sha/
     github_test_merge_commit = pr_data["merge_commit_sha"]
     commit = commits.get_commit(api, urn, github_test_merge_commit)
     updated = arrow.get(commit["commit"]["committer"]["date"])
+
     return updated
 
 

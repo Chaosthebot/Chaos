@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import praw
-from praw.models import MoreComments
 import pprint
+from praw.models import MoreComments
 
 
 '''Authenticated instance of Reddit'''

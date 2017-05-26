@@ -16,11 +16,12 @@ def get_num_watchers(api, urn):
 
 
 def set_desc(api, urn, desc):
-    """ Set description of repo """
+    """ Set description and homepage of repo """
     path = get_path(urn)
     data = {
         "name": settings.GITHUB_REPO,
         "description": desc,
+        "homepage": settings.HOMEPAGE,
     }
     api("patch", path, json=data)
 

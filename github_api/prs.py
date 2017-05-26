@@ -1,8 +1,10 @@
 import arrow
+import math
 import settings
 from . import misc
 from . import voting
 from . import comments
+from . import commits
 from . import exceptions as exc
 
 
@@ -101,15 +103,36 @@ def close_pr(api, urn, pr):
     return api("patch", path, json=data)
 
 
-def get_pr_last_updated(pr_data):
+def get_pr_last_updated(api, urn, pr_data):
     """ a helper for finding the utc datetime of the last pr branch
     modifications """
-    repo = pr_data["head"]["repo"]
-    if repo:
-        dt = repo["pushed_at"]
-    else:
-        dt = pr_data["created_at"]
-    return arrow.get(dt)
+
+    # read about github's merge test commit
+    # https://developer.github.com/v3/pulls/#get-a-single-pull-request
+    # essentially what github does is, when it sees a new push to a PR, it will
+    # start a background job to test the PR for mergeability.  this
+    # background job creates a magical floating merge commit not really attached
+    # to any branch.  however, this commit is real and its committer is
+    # "GitHub"...and it has a commit date that we can assume is never malicious.
+    # And it's always updated on a new push to the PR's branch
+    #
+    # using all of these facts, we are able to determine the true, reliable,
+    # last update time of the branch backing a PR
+    #
+    # NOTE could potentially be deprecated at some point
+    # https://developer.github.com/changes/2013-04-25-deprecating-merge-commit-sha/
+    #
+    # based on https://stackoverflow.com/q/37442144/345059, it looks like it can
+    # be an empty string if the background job is still running, but also handle
+    # cases where the key doesn't exist, and also normalize to None if empty
+    github_test_merge_commit = pr_data.get("merge_commit_sha", None) or None
+
+    updated = None
+    if github_test_merge_commit:
+        commit = commits.get_commit(api, urn, github_test_merge_commit)
+        updated = arrow.get(commit["commit"]["committer"]["date"])
+
+    return updated
 
 
 def get_pr_comments(api, urn, pr_num):
@@ -132,8 +155,12 @@ def get_ready_prs(api, urn, window):
     for pr in open_prs:
         pr_num = pr["number"]
 
+        updated = get_pr_last_updated(api, urn, pr)
+        # if there's no updated time, don't even consider this PR
+        if not updated:
+            continue
+
         now = arrow.utcnow()
-        updated = get_pr_last_updated(pr)
         delta = (now - updated).total_seconds()
 
         is_wip = "WIP" in pr["title"]
@@ -156,15 +183,24 @@ def get_ready_prs(api, urn, window):
             # mergeable can also be None, in which case we just skip it for now
 
 
-def voting_window_remaining_seconds(pr, window):
+def voting_window_remaining_seconds(api, urn, pr, window):
+    """ returns the number of seconds until voting is over.  can be negative,
+    meaning voting has been over for that long """
     now = arrow.utcnow()
-    updated = get_pr_last_updated(pr)
-    delta = (now - updated).total_seconds()
-    return window - delta
+    pr_updated = get_pr_last_updated(api, urn, pr)
+
+    # this is how many seconds ago the pr has been updated with new commits.
+    # if we don't have a last update time, we're setting this to negative
+    # infinity, which is a mind-bender, but makes the maths work out
+    elapsed_last_update = -math.inf
+    if pr_updated:
+        elapsed_last_update = (now - pr_updated).total_seconds()
+
+    return window - elapsed_last_update
 
 
-def is_pr_in_voting_window(pr, window):
-    return voting_window_remaining_seconds(pr, window) <= 0
+def is_pr_in_voting_window(api, urn, pr, window):
+    return voting_window_remaining_seconds(api, urn, pr, window) <= 0
 
 
 def get_pr_reviews(api, urn, pr_num):
@@ -214,7 +250,7 @@ def get_reactions_for_pr(api, urn, pr):
 def post_accepted_status(api, urn, pr, voting_window, votes, total, threshold):
     sha = pr["head"]["sha"]
 
-    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_seconds = voting_window_remaining_seconds(api, urn, pr, voting_window)
     remaining_human = misc.seconds_to_human(remaining_seconds)
     votes_summary = formatted_votes_short_summary(votes, total, threshold)
 
@@ -225,7 +261,7 @@ def post_accepted_status(api, urn, pr, voting_window, votes, total, threshold):
 def post_rejected_status(api, urn, pr, voting_window, votes, total, threshold):
     sha = pr["head"]["sha"]
 
-    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_seconds = voting_window_remaining_seconds(api, urn, pr, voting_window)
     remaining_human = misc.seconds_to_human(remaining_seconds)
     votes_summary = formatted_votes_short_summary(votes, total, threshold)
 
@@ -236,7 +272,7 @@ def post_rejected_status(api, urn, pr, voting_window, votes, total, threshold):
 def post_pending_status(api, urn, pr, voting_window, votes, total, threshold):
     sha = pr["head"]["sha"]
 
-    remaining_seconds = voting_window_remaining_seconds(pr, voting_window)
+    remaining_seconds = voting_window_remaining_seconds(api, urn, pr, voting_window)
     remaining_human = misc.seconds_to_human(remaining_seconds)
     votes_summary = formatted_votes_short_summary(votes, total, threshold)
 

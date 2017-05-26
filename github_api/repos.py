@@ -1,3 +1,4 @@
+import settings
 
 def get_num_watchers(api, urn):
     """ returns the number of watchers for a repo """
@@ -7,3 +8,12 @@ def get_num_watchers(api, urn):
     # which always matches "stargazers_count"
     return data["subscribers_count"]
 
+
+def set_desc(api, urn, desc):
+    """ Set description of repo """
+    path = "/repos/{urn}".format(urn=urn)
+    data = {
+        "name": settings.GITHUB_REPO,
+        "description": desc,
+    }
+    api("patch", path, json=data)

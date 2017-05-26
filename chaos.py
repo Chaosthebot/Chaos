@@ -28,36 +28,15 @@ import encryption
 from github_api import exceptions as gh_exc
 
 
-class HTTPServerRequestHandler(http.server.BaseHTTPRequestHandler):
-
-    def __init__(self):
-        # Load fortunes
-        self.fortunes = []
-        with open("data/fortunes.txt", "r", encoding="utf8") as f:
-            self.fortunes = f.read().split("\n%\n")
-        # Call superclass constructor
-        super(HTTPServerRequestHandler, self).__init__()
-
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html; charset=utf-8")
-        self.end_headers()
-
-        self.wfile.write(random.choice(self.fortunes).encode("utf8"))
-
-def http_server():
-    s = http.server.HTTPServer(('', 8080), HTTPServerRequestHandler)
-    s.serve_forever()
-
-
-def start_http_server():
-    http_server_thread = threading.Thread(target=http_server)
-    http_server_thread.start()
-
 def main():
     logging.basicConfig(level=logging.DEBUG,
+<<<<<<< HEAD
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                             datefmt='%m-%d %H:%M')
+=======
+                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                        datefmt='%m-%d %H:%M')
+>>>>>>> 4b09b5c93488dad4c08a8507705e7f8a19f08087
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
 
@@ -72,16 +51,17 @@ def main():
     server_dir = join(dirname(abspath(__file__)), "server")
     subprocess.Popen([sys.executable, "server.py"], cwd=server_dir)
 
-    #log.info("starting http server")
-    #start_http_server()
-
     # Schedule all cron jobs to be run
     cron.schedule_jobs()
+
+    log.info("Setting description to {desc}".format(desc=settings.REPO_DESCRIPTION))
+    github_api.repos.set_desc(api, settings.URN, settings.REPO_DESCRIPTION)
 
     while True:
         # Run any scheduled jobs on the next second.
         schedule.run_pending()
         time.sleep(1)
+
 
 if __name__ == "__main__":
     main()

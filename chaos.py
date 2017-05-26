@@ -30,8 +30,13 @@ from github_api import exceptions as gh_exc
 
 def main():
     logging.basicConfig(level=logging.DEBUG,
+<<<<<<< HEAD
+                            format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                            datefmt='%m-%d %H:%M')
+=======
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%m-%d %H:%M')
+>>>>>>> 4b09b5c93488dad4c08a8507705e7f8a19f08087
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
 

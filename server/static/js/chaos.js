@@ -34,7 +34,7 @@ canvas.onmousemove = function(e) {
 setInterval(function() {
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#f3482d";
     for (x = 0; x < pix_location.length; x++) {
       var xPos = pix_location[x][0] + 0.1*(char_location[x][0]-pix_location[x][0]);
       var yPos = pix_location[x][1] + 0.1*(char_location[x][1]-pix_location[x][1]);

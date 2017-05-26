@@ -19,7 +19,7 @@ def poll_pull_requests():
 
     # get voting window
     now = arrow.utcnow()
-    voting_window = gh.voting.get_voting_window(now)
+    voting_window = gh.voting.get_voting_window(now, api, settings.URN)
 
     # get all ready prs (disregarding of the voting window)
     prs = gh.prs.get_ready_prs(api, settings.URN, 0)

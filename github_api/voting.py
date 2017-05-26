@@ -1,8 +1,10 @@
 from math import log
 import arrow
 import re
+from datetime import datetime, timezone
 from emoji import demojize
 
+from github_api.misc import dynamic_voting_window
 from . import prs
 from . import comments
 from . import users
@@ -187,17 +189,23 @@ def friendly_voting_record(votes):
     return record
 
 
-def get_voting_window(now):
+def get_voting_window(now, api, urn):
     """ returns the current voting window for new PRs.  currently, this biases
     a smaller window for waking hours around the timezone the chaosbot server is
     located in (US West Coast) """
     local = now.to(settings.TIMEZONE)
     lhour = local.hour
 
+    # Get now as a date
+    dnow = datetime.now(timezone.utc).date()
+    # delta between now and the repo creation date
+    delta = dnow - repos.get_creation_date(api, urn)
+    days = delta.days
+
     hours = settings.DEFAULT_VOTE_WINDOW
     if (lhour >= settings.AFTER_HOURS_START or
             lhour <= settings.AFTER_HOURS_END):
         hours = settings.AFTER_HOURS_VOTE_WINDOW
 
-    seconds = hours * 60 * 60
+    seconds = dynamic_voting_window(days, hours) * 60 * 60
     return seconds

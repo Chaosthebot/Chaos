@@ -65,9 +65,12 @@
                     <div class="content-title header">
                         <h1 class="title"><strong>Hello, Chaos!</strong></h1>
                     </div>
-                    <canvas id="canvas"></canvas>
+                    <canvas onmouseenter="dismissTimeout()" id="canvas"></canvas>
+                    <div class="notification" id="notifbox" hidden="true">
+                        <button class="delete" onclick="dismissNotif()"></button>
+                        Try moving your mouse over Chaos box
+                    </div>
                     <p class="subtitle">Hi, this is <strong>ChaosBot</strong>.</p>
-                    <p class="content">^^^ Hover over me.</p>
                     <p class="content">ChaosBot is a social coding experiment to see what happens when the absolute direction of a software project is turned over to the open source community.</p>
                     <p class="content">For more information see <a href="https://github.com/chaosbot/chaos">Github</a>!</p>
 

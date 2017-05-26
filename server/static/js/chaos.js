@@ -66,3 +66,17 @@ document.addEventListener("keydown", function(e) {
         n = 0;
   }
 });
+
+  var notification = document.getElementById('notifbox'); 
+  console.log(notification) ;
+  var notif = setTimeout(function(){
+    notification.removeAttribute('hidden');
+  }, 5000);
+
+  var dismissTimeout = function(){
+    window.clearTimeout(notif);
+  };
+
+  var dismissNotif = function(){
+    notification.setAttribute('hidden', 'true');
+  }

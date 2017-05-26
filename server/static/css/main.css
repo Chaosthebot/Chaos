@@ -8,7 +8,6 @@
 html {
     font-family: 'Roboto', sans-serif;
     text-rendering: optimizeLegibility;
-    font-size: 18px;
     background-color: #2c2c2c;
     text-align: justify;
 }
@@ -18,21 +17,19 @@ h1 {
     letter-spacing: .10em;
 }
 
-body {}
-
-.container {
-    padding: 0 5% 0 5%;
-    margin: 0 auto;
-    text-align: center;
-    background-color: #FFFFFF;
-    min-width: 600px;
-    max-width: 100%;
+body {
+    margin-top: 1em;    
 }
 
-.content {
+.container {
+    background-color: #FFFFFF;
+}
+
+#header {
     text-align: center;
     min-width: 2em;
     padding: 0 25%;
+    padding-top: 1em;
 }
 
 #github-ribbon {
@@ -40,9 +37,25 @@ body {}
     top: 0;
     right: 0;
     border: 0;
+    z-index: 100;    
 }
 
 .content-title {
     border: 5px;
     border-style: solid;
+}
+
+.content-title h1 {
+    padding: 0.5em;
+    margin-bottom: 0;
+}
+
+#canvas {
+    margin: 5px 0;
+}
+
+body.transform {
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
 }

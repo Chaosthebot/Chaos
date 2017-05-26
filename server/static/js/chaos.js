@@ -51,3 +51,18 @@ setInterval(function() {
     lastX = -1;
     lastY = -1;
 }, 100);
+
+var k = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+n = 0;
+document.addEventListener("keydown", function(e) {
+  if (e.keyCode === k[n++]) {
+    if (n === k.length) {
+      document.body.className = 'transform';
+      setTimeout(function(){ document.body.className = ''; },15000);
+      n = 0;
+      return false;
+    }
+  } else {
+        n = 0;
+  }
+});

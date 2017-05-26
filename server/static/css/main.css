@@ -53,3 +53,9 @@ body {
 #canvas {
     margin: 5px 0;
 }
+
+body.transform {
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+}

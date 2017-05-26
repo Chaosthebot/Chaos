@@ -22,7 +22,6 @@ config = {
 	angle: 20
 };
 
-console.log(canvas_bg);
 
 if (background.getContext){
 	var bctx = background.getContext('2d'),
@@ -51,6 +50,8 @@ if (background.getContext){
 	var setCanvasHeight = function(){
 		
 		wndsize = wndsize()
+		wWidth = wndsize.width;
+		wHeight = wndsize.height;
 		for(var i = 0; canvas_bg.length > i ; i++){
 			canvas_bg[i].width = wWidth;
 			canvas_bg[i].height = wHeight;
@@ -90,7 +91,7 @@ if (background.getContext){
 		bctx.clearRect(0, 0, wWidth, wHeight);
 		
 		var gradient = [];
-		
+		console.log(wWidth);
 		gradient[0] = bctx.createRadialGradient(wWidth*0.3, wHeight*0.1, 0, wWidth*0.3, wHeight*0.1, wWidth*0.9);
 		gradient[0].addColorStop(0, 'rgb(243, 72, 45)');
 		gradient[0].addColorStop(1, 'transparent');
@@ -228,10 +229,8 @@ if (background.getContext){
 		drawBack();
 	};
 	
-	window.onload = function(){
-		setCanvasHeight();
-		createItem();
-	}
+	setCanvasHeight();
+	createItem();
 };
 
 function wndsize(){

@@ -1,11 +1,11 @@
 var img2 = new Image();
-img2.src = "../server/static/assets/particle.png";
-(function($){
+img2.src = "../static/assets/particle.png";
 
-	var canvas = $('#bg').children('canvas'),
-		background = canvas[0],
-		foreground1 = canvas[1],
-		foreground2 = canvas[2],
+window.onload = function(){
+	var background = document.getElementById("cv1"),
+		foreground1 = document.getElementById("cv2"),
+		foreground2 = document.getElementById("cv3"),
+		canvas_bg = document.querySelector("#bg").children,
 		config = {
 			circle: {
 				amount: 21,
@@ -22,6 +22,8 @@ img2.src = "../server/static/assets/particle.png";
 			speed: 0.5,
 			angle: 20
 		};
+
+		console.log(canvas_bg);
 
 	if (background.getContext){
 		var bctx = background.getContext('2d'),
@@ -48,13 +50,16 @@ img2.src = "../server/static/assets/particle.png";
 			clearTimeout;
 
 		var setCanvasHeight = function(){
-			wWidth = $(window).width();
-			wHeight = $(window).height(),
-
-			canvas.each(function(){
-				this.width = wWidth;
-				this.height = wHeight;
-			});
+			console.log(canvas_bg);
+			
+			wndsize = wndsize()
+			wWidth = wndsize.width;
+			wHeight = wndsize.height;
+			for(var i = 0; canvas_bg.length > i ; i++){
+				canvas_bg[i].width = wWidth;
+				canvas_bg[i].height = wHeight;
+			}
+			console.log(canvas_bg);
 		};
 
 		var drawCircle = function(x, y, radius, color, alpha){
@@ -228,11 +233,26 @@ img2.src = "../server/static/assets/particle.png";
 			drawBack();
 		};
 
-		$(document).ready(function(){
+		
 			setCanvasHeight();
 			createItem();
-		});
-		$(window).resize(function(){
-		});
 	}
-})(jQuery);
+};
+
+	function wndsize(){
+		var w = 0;var h = 0;
+		//IE
+		if(!window.innerWidth){
+			if(!(document.documentElement.clientWidth == 0)){
+			//strict mode
+			w = document.documentElement.clientWidth;h = document.documentElement.clientHeight;
+			} else{
+			//quirks mode
+			w = document.body.clientWidth;h = document.body.clientHeight;
+			}
+		} else {
+			//w3c
+			w = window.innerWidth;h = window.innerHeight;
+		}
+		return {width:w,height:h};	
+	}

@@ -28,6 +28,8 @@ with open(_pat_file, "r") as h:
 URN = misc.get_self_urn()
 GITHUB_USER, GITHUB_REPO = URN.split("/")
 
+HOMEPAGE = "http://chaosthebot.com"
+
 # TEST SETTING PLEASE IGNORE
 TEST = False
 

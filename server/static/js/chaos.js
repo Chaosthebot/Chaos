@@ -70,6 +70,8 @@ document.addEventListener("keydown", function(e) {
   var notification = document.getElementById('notifbox'); 
   var notif = setTimeout(function(){
     notification.removeAttribute('hidden');
+    notification.className += " fadeInDown";
+    unfade(notification);
   }, 5000);
 
   var dismissTimeout = function(){
@@ -78,4 +80,31 @@ document.addEventListener("keydown", function(e) {
 
   var dismissNotif = function(){
     notification.setAttribute('hidden', 'true');
+    fade(notification);    
   }
+
+function fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 50);
+}
+
+function unfade(element) {
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
+}

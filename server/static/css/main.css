@@ -8,7 +8,6 @@
 html {
     font-family: 'Roboto', sans-serif;
     text-rendering: optimizeLegibility;
-    font-size: 18px;
     background-color: #2c2c2c;
     text-align: justify;
 }
@@ -18,16 +17,19 @@ h1 {
     letter-spacing: .10em;
 }
 
-body {}
+body {
+    margin-top: 1em;    
+}
 
 .container {
     background-color: #FFFFFF;
 }
 
-.content {
+#header {
     text-align: center;
     min-width: 2em;
     padding: 0 25%;
+    padding-top: 1em;
 }
 
 #github-ribbon {
@@ -41,4 +43,13 @@ body {}
 .content-title {
     border: 5px;
     border-style: solid;
+}
+
+.content-title h1 {
+    padding: 0.5em;
+    margin-bottom: 0;
+}
+
+#canvas {
+    margin: 5px 0;
 }

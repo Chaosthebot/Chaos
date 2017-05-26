@@ -191,7 +191,7 @@ def voting_window_remaining_seconds(api, urn, pr, window):
 
     # this is how many seconds ago the pr has been updated with new commits.
     # if we don't have a last update time, we're setting this to negative
-    # infinity, which says is a mind-bender, but makes the maths work out
+    # infinity, which is a mind-bender, but makes the maths work out
     elapsed_last_update = -math.inf
     if pr_updated:
         elapsed_last_update = (now - pr_updated).total_seconds()

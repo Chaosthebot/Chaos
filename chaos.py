@@ -1,22 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-from os.path import dirname, abspath, join
-
 import time
+import os
 import sys
 import logging
+import threading
+import http.server
+import random
 import subprocess
 import settings
+import patch
 import schedule
+
+from os.path import dirname, abspath, join
 
 import cron
 import github_api as gh
+import github_api.prs
+import github_api.voting
+import github_api.repos
+import github_api.comments
+
+# Has a sideeffect of creating private key if one doesn't exist already
+import encryption
+
+from github_api import exceptions as gh_exc
 
 
 def main():
-    """main entry"""
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%m-%d %H:%M')
@@ -25,7 +37,7 @@ def main():
 
     log = logging.getLogger("chaosbot")
 
-    gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
+    api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
     log.info("starting up and entering event loop")
 

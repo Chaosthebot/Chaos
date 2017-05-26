@@ -1,7 +1,6 @@
 var img2 = new Image();
 img2.src = "../static/assets/particle.png";
 
-window.onload = function(){
 	var background = document.getElementById("cv1"),
 		foreground1 = document.getElementById("cv2"),
 		foreground2 = document.getElementById("cv3"),
@@ -233,10 +232,10 @@ window.onload = function(){
 			drawBack();
 		};
 
-		
+		window.onload = function(){
 			setCanvasHeight();
 			createItem();
-	}
+		}
 };
 
 	function wndsize(){

@@ -1,4 +1,5 @@
 import arrow
+import math
 import settings
 from requests import HTTPError
 from . import misc
@@ -108,10 +109,9 @@ def get_pr_last_updated(pr_data):
     modifications """
     repo = pr_data["head"]["repo"]
     if repo:
-        dt = repo["pushed_at"]
+        return arrow.get(repo["pushed_at"])
     else:
-        dt = pr_data["created_at"]
-    return arrow.get(dt)
+        return None
 
 
 def get_pr_comments(api, urn, pr_num):
@@ -136,6 +136,11 @@ def get_ready_prs(api, urn, window):
 
         now = arrow.utcnow()
         updated = get_pr_last_updated(pr)
+        if updated is None:
+            comments.leave_deleted_comment(api, urn, pr["number"])
+            close_pr(api, urn, pr)
+            continue
+
         delta = (now - updated).total_seconds()
 
         is_wip = "WIP" in pr["title"]
@@ -161,6 +166,8 @@ def get_ready_prs(api, urn, window):
 def voting_window_remaining_seconds(pr, window):
     now = arrow.utcnow()
     updated = get_pr_last_updated(pr)
+    if updated is None:
+        return math.inf
     delta = (now - updated).total_seconds()
     return window - delta
 

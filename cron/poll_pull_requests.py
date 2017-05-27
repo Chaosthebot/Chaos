@@ -92,13 +92,13 @@ def poll_pull_requests():
         # This sets up a voting record, with each user having a count of votes
         # that they have cast.
         try:
-            fp = open('voters.json', 'x')
+            fp = open('server/voters.json', 'x')
             fp.close()
         except:
             # file already exists, which is what we want
             pass
 
-        with open('voters.json', 'r+') as fp:
+        with open('server/voters.json', 'r+') as fp:
             old_votes = {}
             fs = fp.read()
             if fs:

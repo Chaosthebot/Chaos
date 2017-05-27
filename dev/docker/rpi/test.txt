@@ -1,5 +1,1 @@
-[mysqld] \n innodb_use_native_aio = 0
-[mysqld] 
- innodb_use_native_aio = 0
-[mysqld] 
-innodb_use_native_aio = 0
+

@@ -91,7 +91,6 @@ if (background.getContext){
 		bctx.clearRect(0, 0, wWidth, wHeight);
 		
 		var gradient = [];
-		console.log(wWidth);
 		gradient[0] = bctx.createRadialGradient(wWidth*0.3, wHeight*0.1, 0, wWidth*0.3, wHeight*0.1, wWidth*0.9);
 		gradient[0].addColorStop(0, 'rgb(243, 72, 45)');
 		gradient[0].addColorStop(1, 'transparent');

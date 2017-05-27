@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, exists
 import os
 import time
 import sys
@@ -13,6 +13,7 @@ import settings
 import patch
 import schedule
 import cron
+import shutil
 import github_api as gh
 import github_api.prs
 import github_api.voting
@@ -33,6 +34,10 @@ def main():
     logging.getLogger("sh").propagate = False
 
     log = logging.getLogger("chaosbot")
+
+    if exists("voters.json"):
+        log.info("Moving voters,json to server directory!")
+        shutil.move("./voters.json", "./server/voters.json")
 
     api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 

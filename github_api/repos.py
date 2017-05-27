@@ -1,5 +1,5 @@
+import arrow
 import settings
-from datetime import datetime
 
 
 def get_path(urn):
@@ -29,6 +29,4 @@ def set_desc(api, urn, desc):
 def get_creation_date(api, urn):
     """ returns the creation date of the repo """
     data = api("get", get_path(urn))
-    # this is the field for watchers.  do not be tricked by "watchers_count"
-    # which always matches "stargazers_count"
-    return datetime.strptime(data["created_at"], "%Y-%m-%dT%H:%M:%SZ").date()
+    return arrow.get(data["created_at"])

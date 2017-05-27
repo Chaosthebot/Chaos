@@ -6,11 +6,8 @@ import os
 import time
 import sys
 import logging
-import threading
-import http.server
 import subprocess
 import settings
-import patch
 import schedule
 import cron
 import github_api as gh
@@ -20,15 +17,14 @@ import github_api.repos
 import github_api.comments
 
 # Has a sideeffect of creating private key if one doesn't exist already
-import encryption
-
-from github_api import exceptions as gh_exc
+# Currently imported just for the sideeffect (not currently being used)
+import encryption  # noqa: F401
 
 
 def main():
     logging.basicConfig(level=logging.DEBUG,
-        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-        datefmt='%m-%d %H:%M')
+                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                        datefmt='%m-%d %H:%M')
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
 

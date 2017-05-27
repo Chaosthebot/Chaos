@@ -1,6 +1,4 @@
-from math import log
 import arrow
-import re
 from emoji import demojize
 
 from . import prs

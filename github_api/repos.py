@@ -1,5 +1,6 @@
 import settings
 
+
 def get_num_watchers(api, urn):
     """ returns the number of watchers for a repo """
     path = "/repos/{urn}".format(urn=urn)

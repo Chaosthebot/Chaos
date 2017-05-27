@@ -32,7 +32,7 @@ canvas.onmousemove = function(e) {
 }
 
 setInterval(function() {
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#f3482d";
     for (x = 0; x < pix_location.length; x++) {

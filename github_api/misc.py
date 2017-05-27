@@ -11,7 +11,7 @@ def seconds_to_human(seconds):
 
 def dynamic_voting_window(x, lower):
     """ determine the number of hours for the voting window
-    based on the number of day since the project start 
+    based on the number of day since the project start
     return between lower and 9, the value on the 16th day"""
 
     if x < 3:

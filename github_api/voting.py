@@ -1,6 +1,4 @@
-from math import log
 import arrow
-import re
 from datetime import datetime, timezone
 from emoji import demojize
 
@@ -201,7 +199,7 @@ def get_initial_voting_window(now):
 
     hours = settings.DEFAULT_VOTE_WINDOW
     if (lhour >= settings.AFTER_HOURS_START or
-                lhour <= settings.AFTER_HOURS_END):
+            lhour <= settings.AFTER_HOURS_END):
         hours = settings.AFTER_HOURS_VOTE_WINDOW
 
     seconds = hours * 60 * 60
@@ -209,7 +207,7 @@ def get_initial_voting_window(now):
 
 
 def get_extending_voting_window(api, urn):
-    """ returns the extending voting window for PRs mitigated, 
+    """ returns the extending voting window for PRs mitigated,
     based on the difference between repo creation and now """
 
     # Get now as a date

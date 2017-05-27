@@ -30,12 +30,13 @@ you don't lose it.  Be sure not to commit this file and share it with the world
 ### Building the docker image
 
 To build the docker image, navigate to `dev/docker/` and run `bash build.sh`.
+For Windows, be sure to have docker started, then you can run `build.bat`.
 This will run the Dockerfile and produce your docker image with the name
 `chaos`.
 
 ## Running
 
-Make sure you're in `dev/docker/` and run `bash run.sh`. 
+Make sure you're in `dev/docker/` and run `bash run.sh` or `run.bat`.
 
 ## Development Cycle
 

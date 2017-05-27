@@ -1,6 +1,6 @@
 # ChaosBot
 
-[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/Lobby)
+[![Gitter chat](https://badges.gitter.im/chaosthebot/gitter.png)](https://gitter.im/chaosthebot/Lobby) [![ChaosBot](https://img.shields.io/badge/Chaos-Bot-green.svg)](http://chaosthebot.com/)
 
 > Chaos, the vacant and infinite space which existed according to the ancient
 > cosmogonies previous to the creation of the world, and out of which the gods,
@@ -68,9 +68,9 @@ Emoji which count as votes are:
 
 ## Death Counter
 
-Chaosbot has died 13 times.  This counter is incremented whenever the trunk
+Chaosbot has died 15 times.  This counter is incremented whenever the trunk
 breaks and the server must be restarted manually.  Last broken by
-[#230](https://github.com/chaosbot/chaos/pull/230)
+[#239](https://github.com/chaosbot/chaos/pull/239)
 
 ## Rulers
 

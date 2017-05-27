@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
+from os.path import dirname, abspath, join
 import os
+import time
 import sys
 import logging
 import threading
 import http.server
-import random
 import subprocess
 import settings
 import patch
 import schedule
-
-from os.path import dirname, abspath, join
-
 import cron
 import github_api as gh
 import github_api.prs
@@ -30,8 +27,8 @@ from github_api import exceptions as gh_exc
 
 def main():
     logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M')
+        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        datefmt='%m-%d %H:%M')
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
 
@@ -50,7 +47,7 @@ def main():
     cron.schedule_jobs()
 
     log.info("Setting description to {desc}".format(desc=settings.REPO_DESCRIPTION))
-    repos.set_desc(api, settings.URN, settings.REPO_DESCRIPTION)
+    github_api.repos.set_desc(api, settings.URN, settings.REPO_DESCRIPTION)
 
     while True:
         # Run any scheduled jobs on the next second.

@@ -28,6 +28,8 @@ with open(_pat_file, "r") as h:
 URN = misc.get_self_urn()
 GITHUB_USER, GITHUB_REPO = URN.split("/")
 
+HOMEPAGE = "http://chaosthebot.com"
+
 # TEST SETTING PLEASE IGNORE
 TEST = False
 
@@ -35,10 +37,10 @@ TEST = False
 PULL_REQUEST_POLLING_INTERVAL_SECONDS = 30
 
 # The default number of hours for how large the voting window is
-DEFAULT_VOTE_WINDOW = 2.0
+DEFAULT_VOTE_WINDOW = 3.0
 
 # The number of hours for how large the voting window is in the "after hours"
-AFTER_HOURS_VOTE_WINDOW = 3.0
+AFTER_HOURS_VOTE_WINDOW = 4.0
 
 # The hour (in the server time zone) when the after hours start
 AFTER_HOURS_START = 22
@@ -73,4 +75,4 @@ with open("description.txt", "r") as h:
 
 # PRs that have merge conflicts and haven't been touched in this many hours
 # will be closed
-PR_STALE_HOURS = 24
+PR_STALE_HOURS = 36

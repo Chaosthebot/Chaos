@@ -1,5 +1,4 @@
 import arrow
-from datetime import datetime, timezone
 from emoji import demojize
 
 from github_api.misc import dynamic_voting_window
@@ -206,14 +205,13 @@ def get_initial_voting_window(now):
     return seconds
 
 
-def get_extending_voting_window(api, urn):
+def get_extended_voting_window(api, urn):
     """ returns the extending voting window for PRs mitigated,
     based on the difference between repo creation and now """
 
-    # Get now as a date
-    dnow = datetime.now(timezone.utc).date()
+    now = arrow.utcnow()
     # delta between now and the repo creation date
-    delta = dnow - repos.get_creation_date(api, urn)
+    delta = now - repos.get_creation_date(api, urn)
     days = delta.days
 
     hours = settings.DEFAULT_VOTE_WINDOW

@@ -40,6 +40,15 @@ Open a new PR with the merge conflicts fixed to restart voting.
     return leave_comment(api, urn, pr, body)
 
 
+def leave_deleted_comment(api, urn, pr):
+    body = """
+:no_good: The repository backing this PR has been deleted.
+
+Open a new PR with these changes to try again.
+    """.strip()
+    return leave_comment(api, urn, pr, body)
+
+
 def leave_comment(api, urn, pr, body):
     path = "/repos/{urn}/issues/{pr}/comments".format(urn=urn, pr=pr)
     data = {"body": body}

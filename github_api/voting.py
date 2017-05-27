@@ -1,6 +1,4 @@
-from math import log
 import arrow
-import re
 from datetime import datetime, timezone
 from emoji import demojize
 

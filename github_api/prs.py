@@ -1,5 +1,6 @@
 import arrow
 import settings
+from requests import HTTPError
 from . import misc
 from . import voting
 from . import comments
@@ -71,8 +72,9 @@ def formatted_votes_summary(votes, total, threshold):
     vfor = sum(v for v in votes.values() if v > 0)
     vagainst = abs(sum(v for v in votes.values() if v < 0))
 
-    return "with a vote of {vfor} for and {vagainst} against, with a weighted total of {total:.1f} and a threshold of {threshold:.1f}" \
-        .strip().format(vfor=vfor, vagainst=vagainst, total=total, threshold=threshold)
+    return ("with a vote of {vfor} for and {vagainst} against, with a weighted total \
+            of {total:.1f} and a threshold of {threshold:.1f}"
+            .strip().format(vfor=vfor, vagainst=vagainst, total=total, threshold=threshold))
 
 
 def formatted_votes_short_summary(votes, total, threshold):
@@ -89,7 +91,7 @@ def label_pr(api, urn, pr_num, labels):
         labels = [labels]
     path = "/repos/{urn}/issues/{pr}/labels".format(urn=urn, pr=pr_num)
     data = labels
-    resp = api("PUT", path, json=data)
+    return api("PUT", path, json=data)
 
 
 def close_pr(api, urn, pr):

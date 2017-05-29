@@ -85,3 +85,11 @@ with open("description.txt", "r") as h:
 PR_STALE_HOURS = 36
 
 API_COOLDOWN_RESET_PADDING = 30
+
+# The name of the file created upon failures -- also found in chaos_wrapper.py
+# If you are going to change it, change it there too.
+CHAOSBOT_FAILURE_FILE = "/tmp/chaosbot_failed"
+
+# The location of error log -- also found in the supervisor conf.
+# If you are going to change it, change it there too.
+CHAOSBOT_STDERR_LOG = "/var/log/supervisor/chaos-stderr.log"

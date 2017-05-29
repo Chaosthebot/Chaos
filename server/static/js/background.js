@@ -19,7 +19,10 @@ config = {
 		alpha: 0.3
 	},
 	speed: 0.5,
-	angle: 20
+	angle: 20,
+    get degree() {
+        return this.angle/360*Math.PI*2
+    }
 };
 
 
@@ -28,10 +31,9 @@ if (background.getContext){
 	fctx1 = foreground1.getContext('2d'),
 	fctx2 = foreground2.getContext('2d'),
 	M = window.Math, // Cached Math
-	degree = config.angle/360*M.PI*2,
 	circles = [],
 	lines = [],
-	wWidth, wHeight, timer;
+	wWidth, wHeight, timer, interval;
 	
 	requestAnimationFrame = window.requestAnimationFrame ||
 	window.mozRequestAnimationFrame ||
@@ -70,8 +72,8 @@ if (background.getContext){
 	};
 	
 	var drawLine = function(x, y, width, color, alpha){
-		var endX = x+M.sin(degree)*width,
-		endY = y-M.cos(degree)*width,
+		var endX = x+M.sin(config.degree)*width,
+		endY = y-M.cos(config.degree)*width,
 		gradient = fctx2.createLinearGradient(x, y, endX, endY);
 		gradient.addColorStop(0, 'rgba('+color[0]+','+color[1]+','+color[2]+','+alpha+')');
 		gradient.addColorStop(1, 'rgba('+color[0]+','+color[1]+','+color[2]+','+(alpha-0.1)+')');
@@ -88,8 +90,8 @@ if (background.getContext){
 	};
 	
 	var animate = function(){
-		var sin = M.sin(degree),
-		cos = M.cos(degree);
+		var sin = M.sin(config.degree),
+		cos = M.cos(config.degree);
 		
 		if (config.circle.amount > 0 && config.circle.layer > 0){
 			fctx1.clearRect(0, 0, wWidth, wHeight);
@@ -155,6 +157,21 @@ if (background.getContext){
 		
 		timer = requestAnimationFrame(animate);
 	};
+    
+    var changeAngle = function(angle){
+        if (interval) clearInterval(interval);
+        let amt = 5;
+        setInterval(function(){
+            if (config.angle < angle + 5 && config.angle > angle - 5) {
+                config.angle = angle;
+                clearInterval(interval);
+            } else if (config.angle > angle) {
+                config.angle -= 5;
+            } else {
+                config.angle += 5;
+            }
+        }, 50);
+    }
 	
 	var createItem = function(){
 		circles = [];
@@ -210,4 +227,8 @@ function wndsize(){
 		w = window.innerWidth;h = window.innerHeight;
 	}
 	return {width:w,height:h};	
+}
+
+window.keydown = function(event) {
+    if (event.keyCode == 65) changeAngle(Math.round(Math.random() * 10 - 5));
 }

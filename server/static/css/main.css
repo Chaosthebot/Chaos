@@ -99,6 +99,9 @@ body.transform {
 
 /* BACKGROUND */
 #bg {
+    background: radial-gradient(at 30% 10%, rgb(243, 72, 45), transparent 90vw),
+        radial-gradient(at 10% 10%, rgb(243, 72, 45), transparent 100vw),
+        radial-gradient(at 10% 50%, rgb(243, 72, 45), transparent 50vw);
     position: fixed;
     top: 0;
     left: 0;

@@ -13,10 +13,8 @@ THIS_DIR = dirname(abspath(__file__))
 __log = logging.getLogger("chaosbot")
 
 
-def poll_pull_requests():
+def poll_pull_requests(api):
     __log.info("looking for PRs")
-
-    api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
     # get voting window
     now = arrow.utcnow()

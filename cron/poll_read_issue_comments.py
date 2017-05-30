@@ -26,7 +26,7 @@ if not os.path.exists(SAVED_COMMANDS_FILE):
     with open(SAVED_COMMANDS_FILE, 'w') as f:
         json.dump({}, f)
 
-__log = logging.getLogger("chaosbot")
+__log = logging.getLogger("poll_issue_commands")
 
 '''
 Command Syntax
@@ -226,10 +226,8 @@ def handle_comment(api, issue_comment):
             gh.comments.edit_comment(api, settings.URN, resp_id, body)
 
 
-def poll_read_issue_comments():
+def poll_read_issue_comments(api):
     __log.info("looking for issue comments")
-
-    api = gh.API(settings.GITHUB_USER, settings.GITHUB_SECRET)
 
     issue_comments = gh.comments.get_all_issue_comments(api, settings.URN)
 

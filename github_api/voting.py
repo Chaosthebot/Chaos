@@ -125,16 +125,21 @@ def get_vote_weight(api, username):
 
 def get_vote_sum(api, votes):
     """ for a vote mapping of username => -1 or 1, compute the weighted vote
-    total """
+    total and variance(measure of controversy)"""
     total = 0
-    variance = 0
+    positive = 0
+    negative = 0
     for user, vote in votes.items():
         weight = get_vote_weight(api, user)
-        total += weight * vote
-        if weight * vote > 0:
-            variance += vote
+        weighted_vote = weight * vote
+        total += weighted_vote
+        if weighted_vote > 0:
+            positive += weighted_vote
+        elif weighted_vote < 0:
+            negative -= weighted_vote
 
-    return total, (variance - total)
+    variance = min(positive, negative)
+    return total, variance
 
 
 def get_approval_threshold(api, urn):

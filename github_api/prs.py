@@ -2,6 +2,7 @@ import math
 import logging
 import arrow
 from requests import HTTPError
+from unidiff import PatchSet
 
 import settings
 from . import comments
@@ -266,6 +267,15 @@ def get_reactions_for_pr(api, urn, pr):
     reactions = api("get", path, params=params)
     for reaction in reactions:
         yield reaction
+
+
+def get_patch(api, urn, pr_num, raw=False):
+    """ get the formatted or not patch file for a pr """
+    path = "/{urn}/pull/{pr}.patch".format(urn=urn, pr=pr_num)
+    data = api("get", path)
+    if raw:
+        return data
+    return PatchSet(data)
 
 
 def post_accepted_status(api, urn, pr, voting_window, votes, total, threshold,

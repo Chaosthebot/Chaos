@@ -123,10 +123,12 @@ document.getElementById("voters").onclick = function() {
 }
 
 document.getElementById("main").onclick = function() {
-  document.getElementById("main").classList.add("active");
-  document.getElementById("voters").classList.add("inactive");
-  document.getElementById("voters").classList.remove("active");
-  document.getElementById("main").classList.remove("inactive");
+  if (document.getElementById("main").classList.contains('inactive')) {
+    document.getElementById("main").classList.add("active");
+    document.getElementById("voters").classList.add("inactive");
+    document.getElementById("voters").classList.remove("active");
+    document.getElementById("main").classList.remove("inactive");
+  }
 }
 
 /** LOAD VOTERS LIST */

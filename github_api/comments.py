@@ -1,8 +1,16 @@
 import settings
+import arrow
 from . import prs
+from .misc import handle_pagination_all, dt_to_github_dt
 
 
-def get_all_issue_comments(api, urn):
+@handle_pagination_all
+def get_all_issue_comments(api, urn, page=1, since=None):
+
+    if since is None:
+        # Set since to be before repo was created
+        since = arrow.get("2017-05-20T00:00:00Z")
+
     # Do all issue comments at once for API's sake..
     path = "/repos/{urn}/issues/comments".format(urn=urn)
     # TODO - implement parameters
@@ -11,8 +19,16 @@ def get_all_issue_comments(api, urn):
     # since - Only comments updated at or after this time are returned.
     # This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
     # Add get-reaction support for issue comments
-    params = {"per_page": settings.DEFAULT_PAGINATION}
-    comments = api("get", path, params=params)
+    params = {
+        "per_page": settings.DEFAULT_PAGINATION,
+        "page": page
+        }
+
+    data = {
+        "since": dt_to_github_dt(since)
+    }
+
+    comments = api("get", path, json=data, params=params)
     for comment in comments:
         # Return issue_id, global_comment_id, comment_text
         issue_comment = {}

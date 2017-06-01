@@ -46,6 +46,7 @@ def create_label(api, urn, name, color="ededed"):
         "name": name,
         "color": color
     }
+    resp = None
     try:
         resp = api("post", "/repos/{urn}/labels".format(urn=urn), json=data)
     except:

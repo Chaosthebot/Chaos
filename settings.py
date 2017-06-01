@@ -104,3 +104,16 @@ MERITOCRACY_TOP_CONTRIBUTORS = 10
 
 # The top n voters will be allowed in the meritocracy
 MERITOCRACY_TOP_VOTERS = 10
+
+# Database settings
+DB_ADAPTER = "sqlite"
+DB_CONFIG = {
+    "filename": "db.sqlite"
+}
+# MySQL example
+# DB_CONFIG = {
+#     "host ": "localhost",
+#     "user ": "chaos",
+#     "password ": "chaos",
+#     "db ": "db"
+# }

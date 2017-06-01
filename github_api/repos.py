@@ -1,5 +1,8 @@
 import arrow
 import settings
+import logging
+
+__log = logging.getLogger("github_api.repos")
 
 
 def get_path(urn):
@@ -43,4 +46,9 @@ def create_label(api, urn, name, color="ededed"):
         "name": name,
         "color": color
     }
-    return api("post", "/repos/{urn}/labels".format(urn=urn), json=data)
+    try:
+        resp = api("post", "/repos/{urn}/labels".format(urn=urn), json=data)
+    except:
+        __log.exception("couldn't create label")
+
+    return resp

@@ -84,13 +84,13 @@ def poll_pull_requests(api):
                     except gh.exceptions.CouldntMerge:
                         __log.info("couldn't merge PR %d for some reason, skipping",
                                    pr_num)
-                        gh.prs.label_pr(api, settings.URN, pr_num, ["can't merge"])
+                        gh.issues.label_issue(api, settings.URN, pr_num, ["can't merge"])
                         continue
 
                     gh.comments.leave_accept_comment(
                         api, settings.URN, pr_num, sha, votes, vote_total,
                         threshold, meritocracy_satisfied)
-                    gh.prs.label_pr(api, settings.URN, pr_num, ["accepted"])
+                    gh.issues.label_issue(api, settings.URN, pr_num, ["accepted"])
 
                     # chaosbot rewards merge owners with a follow
                     pr_owner = pr["user"]["login"]
@@ -109,7 +109,7 @@ def poll_pull_requests(api):
                     gh.comments.leave_reject_comment(
                         api, settings.URN, pr_num, votes, vote_total, threshold,
                         meritocracy_satisfied)
-                    gh.prs.label_pr(api, settings.URN, pr_num, ["rejected"])
+                    gh.issues.label_issue(api, settings.URN, pr_num, ["rejected"])
                     gh.prs.close_pr(api, settings.URN, pr)
                 elif vote_total < 0:
                     gh.prs.post_rejected_status(

@@ -1,0 +1,15 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    # Make site outside accessible
+    server_name 0.0.0.0;
+
+    root /root/workspace/Chaos/server;
+    index index.html index.htm;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass 127.0.0.1:8085;
+    }
+}

@@ -143,7 +143,7 @@ document.getElementById("main").onclick = () => {
 const result = document.getElementById("result");
 // read text from URL location
 const request = new XMLHttpRequest();
-request.open("GET", "voters.json", true);
+request.open("GET", "voters?amount=20", true);
 request.send(null);
 request.onreadystatechange = () => {
     if (request.readyState === 4 && request.status === 200) {

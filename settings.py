@@ -91,7 +91,8 @@ REPO_LABELS = {
     "conflicts": "fbca04",
     "mergeable": "dddddd",
     "can't merge": "ededed",
-    "ci failed": "ff9800"
+    "ci failed": "ff9800",
+    "crash report": "ff0000"
 }
 
 # PRs that have merge conflicts and haven't been touched in this many hours

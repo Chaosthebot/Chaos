@@ -59,6 +59,7 @@ def main():
 
     logging.getLogger("requests").propagate = False
     logging.getLogger("sh").propagate = False
+    logging.getLogger("peewee").propagate = False
 
     log = logging.getLogger("chaosbot")
 

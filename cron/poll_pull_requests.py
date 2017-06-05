@@ -3,7 +3,7 @@ import json
 import os
 import sys
 from os.path import join, abspath, dirname
-from lib.db import DB
+from lib.db.models import MeritocracyMentioned
 
 import settings
 import github_api as gh
@@ -15,18 +15,6 @@ __log = logging.getLogger("pull_requests")
 
 def poll_pull_requests(api):
     __log.info("looking for PRs")
-
-    db = DB.get_instance()
-
-    try:
-        db.query("""
-CREATE TABLE IF NOT EXISTS meritocracy_mentioned (
-    id INTEGER PRIMARY KEY,
-    commit_hash VARCHAR(40)
-)
-        """)
-    except:
-        __log.exception("Failed to create meritocracy mentioned DB table")
 
     # get voting window
     base_voting_window = gh.voting.get_initial_voting_window()
@@ -90,12 +78,11 @@ CREATE TABLE IF NOT EXISTS meritocracy_mentioned (
                     # check if we need to mention the meritocracy
                     try:
                         commit = pr["head"]["sha"]
-                        if not db.query("SELECT * FROM meritocracy_mentioned WHERE commit_hash=?",
-                                        (commit,)):
+
+                        mm, created = MeritocracyMentioned.get_or_create(commit_hash=commit)
+                        if created:
                             meritocracy_mentions = meritocracy - {pr["user"]["login"].lower(),
                                                                   "chaosbot"}
-                            db.query("INSERT INTO meritocracy_mentioned (commit_hash) VALUES (?)",
-                                     (commit,))
                             gh.comments.leave_meritocracy_comment(api, settings.URN, pr["number"],
                                                                   meritocracy_mentions)
                     except:

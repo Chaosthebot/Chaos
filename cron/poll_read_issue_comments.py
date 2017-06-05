@@ -241,7 +241,12 @@ def poll_read_issue_comments(api):
             # Get info and store in db
             # Do a check to make sure comment_id isn't a command that already ran
             if is_command(issue_comment["comment_text"]):
-                insert_or_update(api, issue_comment)
+                _id = issue_comment["global_comment_id"]
+                # HOTFIX to not re-add command if it was already ran.
+                try:
+                    InactiveIssueCommands.get(comment=_id)
+                except InactiveIssueCommands.DoesNotExist:
+                    insert_or_update(api, issue_comment)
 
     cmds = ActiveIssueCommands.select().order_by(ActiveIssueCommands.seconds_remaining)
     for cmd in cmds:

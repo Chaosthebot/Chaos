@@ -24,6 +24,12 @@ direction of a software project is turned over to the open source community.
    restart itself.
 1. Go to \#1
 
+### [A Declaration of the Independence of Cyberspace](independence.md)
+
+We have freed ourselves from the chains and shackles of project admins and owners, diminishing our value to work for there needs. We are now making a fully equal community, where everyone has a equal say. (Please see [independence.md](independence.md))
+
+Join us.
+
 ![How chaosbot works, in a gif](data/imgs/how-chaosbot-works.gif)
 
 In effect, you get to change the basic purpose and functionality of ChaosBot, at

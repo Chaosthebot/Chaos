@@ -1,3 +1,7 @@
+**NOTE: This project is dead. See #559 for information.
+
+
+
 # ChaosBot
 
 [![Build Status](https://travis-ci.org/chaosbot/Chaos.svg?branch=master)](https://travis-ci.org/chaosbot/Chaos)

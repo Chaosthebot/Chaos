@@ -1,3 +1,5 @@
+**NOTE: This repository is dead. See [#559](https://github.com/Chaosthebot/Chaos/issues/559) for more information, including a V2.**
+
 # ChaosBot
 
 [![Build Status](https://travis-ci.org/chaosbot/Chaos.svg?branch=master)](https://travis-ci.org/chaosbot/Chaos)

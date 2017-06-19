@@ -1,4 +1,4 @@
-**NOTE: This project is dead. See #559 for more information, including a V2.**
+**NOTE: This repository is dead. See #559 for more information, including a V2.**
 
 # ChaosBot
 
